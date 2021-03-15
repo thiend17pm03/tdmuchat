@@ -1,0 +1,9 @@
+Nếu edit lại file đã commit  thì thay -m "abcdef" thành --amend : 
+    nó sẽ không thêm commit mới mà gộp vào commit trc đó
+
+Từ lần push thứ 2 của pull request thì thêm thuộc tính -f vào sau để khỏi update lại code trên github:
+    git push origin tmdu -f
+
+
+
+
