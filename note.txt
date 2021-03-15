@@ -4,6 +4,12 @@ Nếu edit lại file đã commit  thì thay -m "abcdef" thành --amend :
 Từ lần push thứ 2 của pull request thì thêm thuộc tính -f vào sau để khỏi update lại code trên github:
     git push origin tmdu -f
 
+Kéo code từ branch trên git về : 
+    git checkout main : thay main or tên branch cần Kéo
+    git pull origin main 
+
+Xóa branch : git branch -D test : thay test thành tên branch cần xóa
+
 
 
 
