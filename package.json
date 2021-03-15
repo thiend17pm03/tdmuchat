@@ -1,0 +1,22 @@
+{
+  "name": "tmduchat",
+  "version": "1.0.0",
+  "description": "nodejs chat",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thiend17pm03/tdmuchat.git"
+  },
+  "author": "Hoang Thien",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thiend17pm03/tdmuchat/issues"
+  },
+  "homepage": "https://github.com/thiend17pm03/tdmuchat#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
