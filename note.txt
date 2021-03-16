@@ -13,3 +13,4 @@ Xóa branch : git branch -D test : thay test thành tên branch cần xóa
 
 
 
+..
