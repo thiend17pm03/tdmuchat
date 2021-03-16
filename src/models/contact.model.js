@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 let Schema = mongoose.Schema;
 
-let contactSchema = new Schema({
+let ContactSchema = new Schema({
   userId : String,
   contactId : String, 
   status : {type : Boolean, default : false},
@@ -11,4 +11,10 @@ let contactSchema = new Schema({
   deletedAt : {type: Number, default: null},
 });
 
-module.exports = mongoose.model("contact",contactSchema);
+ContactSchema.statics = {
+  createNew (item) {
+    return this.create(item);
+  }
+}
+
+module.exports = mongoose.model("contact",ContactSchema);

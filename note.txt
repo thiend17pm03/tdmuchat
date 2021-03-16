@@ -10,7 +10,62 @@ Kéo code từ branch trên git về :
 
 Xóa branch : git branch -D test : thay test thành tên branch cần xóa
 
+
+Biến môi trường : 
+    + gõ console : printenv để xem các biến môi trường
+        // printenv | grep APP : để xem các biến môi trường bắt đầu bằng APP
+    + Tạo các biến enviroment (Linux):
+        - tạo thư mục sh trong thư mục gốc, sau đó tạo 2 file trong thư mục sh : env.sh và env.example.sh 
+            // env.sh : config chính, thường k up lên git
+            // env.example.sh : mẫu config để cấu hình, up lên để khi clone về có cái mà xem :))
+        - trước khi npm start thì phải chạy source sh/env.sh để khởi tạo vì khi kill terminal sẽ bị mất.
+        - để sử biến môi trường thì dùng process.env.TenBien (process.env.4HOST)
+
+ 
+Bower : là một công cụ quản lý resource cho lập trình front-end được open source bởi Twitter. 
+    Bower giúp tìm kiếm, cài đặt, nâng cấp và cố định dependency cho một front-end project:
+    + install : npm i -g bower : bắt buộc có -g ms xài đc bower cmd
+    + install thư viện : bower install boostrap#4.0.0 
+        // bower install boostrap#4.0.0 --save : sẽ tự thêm vào dependencies trong file json
+    + chúng ta có thể thêm 2 file ở thư mục gốc: 
+        bower.json : tương tự như bower init,
+        .bowerrc : cấu hình bower như : đường dẫn...
+            - { "directory": "src/public" } : đường dẫn khi tải về là src/public
+    + Giống như các dependency manager khác, chúng ta có thể định nghĩa một tập các dependency vào một file bower.json 
+        và để câu lệnh bower đọc file đó (thay cho việc phải gõ bower install x n lần với n thư viện).
+        - bower init : khởi tạo bower.json ở thư mục gốc
+                {
+                "name": "awesome_proj",
+                "version": "0.0.0",
+                "authors": [
+                    "HoangThien"
+                ],
+                "license": "",
+                "dependencies": {
+                    "bootstrap": "~3.2.0"
+                },
+                "dependencies": {
+                    "bower_components": "https://github.com/thiend17p03/tdmu-chat-bower.git"
+                },
+                }
+
+        + bower install : Khi muốn tải hết các thư viện trong json.
+        + Các câu lệnh khác : ex :  bower search normalize
+            - search hihi : tìm kiếm hihi trong bower
+            - list : liệt kê nhanh các dependencies
+            - info boostrap : xem thông tin cụ thể về boostrap
+            - lookup boostrap : xem đường dẫn cài đặt boostrap
+            - uninstall boostrap --save : gỡ cài đặt boostrap đồng thời cập nhật trong thông tin tương ứng trong bower.json
+}
  
 
+  mở PowerShell -> Run Aministration ->  Set-ExecutionPolicy RemoteSigned :
+    bower.ps1 cannot be loaded because running scripts is disabled on this system
 
-..
+    export nhiều biến : 
+        const authController = require('./authController')
+        const homeController = require('./homeController')
+        export const home = homeContrller;
+        export const auth = authController;
+
+        import {home,auth} from {./../controller}

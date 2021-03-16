@@ -14,10 +14,12 @@ const connectDB = ()=> {
   let DB_USERNAME = '';
   let DB_PASSWORD = '';
   // mongodb://localhost:27017/tdmu_chat
+  //let URI = `${process.env.DB_CONNECTION}://${process.env.DB_HOST}/${DB_NAME}`;
+  let URI = `${DB_CONNECTION}://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
-  let URI = `${DB_CONNECTION}://${DB_HOST}/${DB_NAME}`;
-
-  return mongoose.connect(URI,{useMongoClient : true});
+  return mongoose.connect(URI,{useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,});
 
 }
 
