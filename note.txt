@@ -10,7 +10,7 @@ Kéo code từ branch trên git về :
 
 Xóa branch : git branch -D test : thay test thành tên branch cần xóa
 
-
+ 
 
 
 ..
