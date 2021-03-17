@@ -4,6 +4,7 @@ const connectDB = require('./config/connectDB');
 const viewEngine = require('./config/viewEngine');
 const initRoutes = require('./routes/web');
 
+
 let app = express();
 
 // config DB
@@ -11,6 +12,9 @@ connectDB();
 
 // config View Engine
 viewEngine(app);
+
+// Enable post data for request
+app.use(express.urlencoded({ extended: true }));
 
 // init routes
 initRoutes(app);
