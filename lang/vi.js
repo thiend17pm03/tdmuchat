@@ -11,12 +11,18 @@ module.exports =  {
       account_remove  : "Tài khoản đã bị khóa",
       accout_not_active : "Tài khoản đã được đăng ký nhưng chưa kích hoạt",
       token_undefined : 'Token không tồn tại',
+      login_failed : "Sai tài khoản hoặc mật khẩu",
+      server_error : "Có lỗi ở phía server",
   },
   transSuccess : {
     userCreated : (email) =>{
         return `Tạo tài khoản thành công. Vui lòng kiểm tra email : <strong>${email}</strong>`
     },
-    account_actived : "Kích hoạt tài khoản thành công. Bạn có thể đăng nhập vào ứng dụng." 
+    account_actived : "Kích hoạt tài khoản thành công. Bạn có thể đăng nhập vào ứng dụng." ,
+    loginSuccess : (username)=>{
+      return `Xin chào ${username}`;
+    },
+    logout_success : "Đăng xuất thành công",
   },
   transMail : {
     subject : "TDMU Chat : Xác nhận kích hoạt tài khoản ",

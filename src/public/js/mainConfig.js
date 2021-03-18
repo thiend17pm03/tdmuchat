@@ -139,6 +139,12 @@ function cancelCreateGroup() {
     }
   });
 }
+function flashMasterNotify() {
+  let notify = $(".master-success-message").text();
+  if(notify.length){
+    alertify.notify(notify,"success",7);
+  }
+}
 
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
@@ -169,4 +175,7 @@ $(document).ready(function() {
 
   // Action hủy việc tạo nhóm trò chuyện
   cancelCreateGroup();
+
+  //flash message ở màn hình main
+  flashMasterNotify();
 });

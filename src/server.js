@@ -5,7 +5,8 @@ const viewEngine = require('./config/viewEngine');
 const initRoutes = require('./routes/web');
 const connectFlash = require('connect-flash');
 const configSession = require('./config/session');
-const env = require('./../env/env')
+const env = require('./../env/env');
+const passport = require('passport');
 
 
 let app = express();
@@ -24,6 +25,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Enable connect Flash
 app.use(connectFlash());
+
+//config passport
+app.use(passport.initialize());
+app.use(passport.session()); 
 
 // init routes 
 initRoutes(app);
