@@ -3,12 +3,16 @@ const express = require('express');
 const connectDB = require('./config/connectDB');
 const viewEngine = require('./config/viewEngine');
 const initRoutes = require('./routes/web');
-
+const connectFlash = require('connect-flash');
+const configSession = require('./config/session');
 
 let app = express();
 
 // config DB
 connectDB();
+
+// config Sesion
+configSession(app);
 
 // config View Engine
 viewEngine(app);
@@ -16,12 +20,15 @@ viewEngine(app);
 // Enable post data for request
 app.use(express.urlencoded({ extended: true }));
 
-// init routes
+// Enable connect Flash
+app.use(connectFlash());
+
+// init routes 
 initRoutes(app);
 
 // config app info
 let hostname = "localhost";
-let port = "8017";
+let port = "8000";
 
 app.get("/",((req,res)=>{
  res.send("<h1>Hello</h1>")
