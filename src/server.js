@@ -5,6 +5,8 @@ const viewEngine = require('./config/viewEngine');
 const initRoutes = require('./routes/web');
 const connectFlash = require('connect-flash');
 const configSession = require('./config/session');
+const env = require('./../env/env')
+
 
 let app = express();
 
@@ -26,17 +28,14 @@ app.use(connectFlash());
 // init routes 
 initRoutes(app);
 
-// config app info
-let hostname = "localhost";
-let port = "8000";
 
 app.get("/",((req,res)=>{
  res.send("<h1>Hello</h1>")
 })) 
 
 
-app.listen(port,hostname,()=>{
-    console.log(`listen at: ${hostname}:${port}`)
+app.listen(env.APP_PORT,env.APP_HOST,()=>{
+    console.log(`listen at: ${env.APP_HOST}:${env.APP_PORT}`)
 })
 
 

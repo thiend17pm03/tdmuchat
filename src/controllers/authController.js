@@ -29,7 +29,7 @@ const postRegister = async (req,res)=>{
       }
     
       try {
-        let status = await auth.register(req.body.email,req.body.gender,req.body.password);
+        let status = await auth.register(req.body.email,req.body.gender,req.body.password,req.protocol,req.get("host"));
         successArr.push(status);
         req.flash('success',successArr);
         return res.redirect('/auth');
@@ -46,10 +46,30 @@ const postRegister = async (req,res)=>{
 
 
 
+const verifyAccount = async (req,res)=>{
+  let errArr = [];
+  let successArr = [];
+  try {
 
+    let status = await auth.verifyAccount(req.params.token);
+      successArr.push(status);
+      req.flash('success',successArr);
+      return res.redirect('/auth');
+    
+  } catch (error) {
+
+    errArr.push(error)
+    req.flash('errors',errArr);
+    return res.redirect('/auth');
+    
+  }
+
+
+}
 
 module.exports = {
   getLoginRegister : getLoginRegister,
   getLogout : getLogout,
-  postRegister : postRegister
+  postRegister : postRegister,
+  verifyAccount : verifyAccount 
 }
