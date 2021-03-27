@@ -2,7 +2,7 @@
 // const homeContrller =  require('./../controllers/homeController');
 const express = require('express');
 const controllers = require('./../controllers');
-const {authValid,userValid} = require('./../validation/index');
+const {authValid,userValid,contactValid} = require('./../validation/index');
 const initPassportLocal = require('../controllers/passportController/local');
 const initPassportFacebook = require('../controllers/passportController/facebook');
 const initPassportGoogle = require('../controllers/passportController/google');
@@ -56,6 +56,11 @@ let initRoutes = (app) =>{
      router.put("/user/update-avatar",controllers.auth.checkLoginIn,controllers.user.updateAvatar);
      router.put("/user/update-info",controllers.auth.checkLoginIn,userValid.updateInfo,controllers.user.updateInfo);
      router.put("/user/update-password",controllers.auth.checkLoginIn,userValid.updatePassword,controllers.user.updatePassword);
+     router.get("/contact/find-users/:keyword",
+     controllers.auth.checkLoginIn,
+     contactValid.findUsersContact,
+     controllers.contact.findUsersContact);
+
 
   return app.use('/',router)
 }
