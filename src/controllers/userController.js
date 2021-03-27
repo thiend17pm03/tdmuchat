@@ -76,6 +76,7 @@ let updateInfo = async (req, res) => {
     let result = {
       message: transSuccess.user_info_updated,
     };
+
     return res.status(200).send(result);
   } catch (error) {
     console.log(error);
@@ -97,6 +98,7 @@ let updatePassword = async (req, res) => {
 
   try {
     let updateUserItem = req.body;
+    console.log(updateUserItem);
     await user.updatePassword(req.user._id, updateUserItem);
 
     let result = {

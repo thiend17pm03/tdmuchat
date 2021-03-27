@@ -6,7 +6,7 @@ let Schema = mongoose.Schema;
 let UserSchema = new Schema({
   username : String,
   gender : {type : String, default : "male"},
-  phone : {type : Number, default : null},
+  phone : {type : String, default : null},
   address : {type : String, default : null},
   avatar : {type  : String, default : "avatar-default.jpg"},
   role : {type : String, default : "user"},
@@ -38,6 +38,9 @@ UserSchema.statics = {
   findEmail(email) {
     return this.findOne({'local.email':email}).exec();
   },
+  findUserByIdToUpdatePassword(id) {
+    return this.findById(id).exec();
+  },
   removeById(id){
     return this.findByIdAndRemove(id).exec(); 
   },
@@ -55,6 +58,9 @@ UserSchema.statics = {
   },
   updateUser(id, item) {
     return this.findByIdAndUpdate(id, item).exec(); // return old item after updated
+  },
+  updatePassword(id, hashedPassword) {
+    return this.findByIdAndUpdate(id, {"local.password": hashedPassword}).exec();
   },
 
   verify(token){
