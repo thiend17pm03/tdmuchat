@@ -9,7 +9,7 @@ let UserSchema = new Schema({
   phone : {type : Number, default : null},
   address : {type : String, default : null},
   avatar : {type  : String, default : "avatar-default.jpg"},
-  role : {type : String, dafault : "user"},
+  role : {type : String, default : "user"},
   local : {
     email : {type : String, strim : true},
     password : String,
@@ -19,12 +19,12 @@ let UserSchema = new Schema({
   facebook : {
     uid : String,
     token : String,
-    email : {type : Number, strim : true},
+    email : {type : String, strim : true},
   },
   google : {
     uid : String,
     token : String,
-    email : {type : Number, strim : true},
+    email : {type : String, strim : true},
   },
   createdAt : {type: Number, default: Date.now},
   updatedAt : {type: Number, default: null},
@@ -47,6 +47,16 @@ UserSchema.statics = {
   findUserById(id) {
     return this.findById(id).exec();
   },
+  findByFacebookUid(id) {
+    return this.findOne({'facebook.uid' : id}).exec();
+  },
+  findByGoogleUid(id) {
+    return this.findOne({'google.uid' : id}).exec();
+  },
+  updateUser(id, item) {
+    return this.findByIdAndUpdate(id, item).exec(); // return old item after updated
+  },
+
   verify(token){
     return this.findOneAndUpdate(
       {'local.verifyToken' : token},

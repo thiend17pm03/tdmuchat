@@ -4,6 +4,14 @@ module.exports =  {
     gender_incorrect : "Muốn giỡn thiệc hả ???",
     password_incorrect : "Mật khẩu phải chứa ít nhất 8 kí tự, bao gồm số, chữ hoa, chữ thường và kí tự đặc biệt",
     passwrod_confirmation_incorrect : "Nhập lại mật khẩu chưa chính xác !",
+    update_username: "Username bao gồm chữ, số và nằm từ 3 - 17 kí tự",
+    update_gender: "Are you bedue ???",
+    update_address: "Địa chỉ từ 3 - 30 kí tự",
+    update_phone: "Vui lòng nhập chính xác số điện thoại",
+    keyword_find_user: "Lỗi từ khóa tìm kiếm, chỉ cho phép ký tự chữ cái và số, cho phép khoảng trống.",
+    message_text_emoji_incorrect: "Tin nhắn không hợp lệ. Đảm bảo tối thiểu 1 ký tự, tối đa 400 ký tự.",
+    add_new_group_users_incorrect: "Vui lòng chọn bạn bè để thêm vào nhóm, tối thiểu 2 người.",
+    add_new_group_name_incorrect: "Vui lòng nhập tên cuộc trò chuyện, giới hạn 5-30 ký tự và không chữa các ký tự đặc biệt.",
   
   },
   transErrors :{
@@ -13,6 +21,13 @@ module.exports =  {
       token_undefined : 'Token không tồn tại',
       login_failed : "Sai tài khoản hoặc mật khẩu",
       server_error : "Có lỗi ở phía server",
+      avatar_type: "Kiểu file không hợp lệ, chỉ chấp nhận jpg & png.",
+      avatar_size: "Ảnh upload tối đa cho phép là 1MB",
+      user_current_password_failed: "Mật khẩu hiện tại không chính xác.",
+      conversation_not_found: "Cuộc trò chuyện không tồn tại.",
+      image_message_type: "Kiểu file không hợp lệ, chỉ chấp nhận jpg & png.",
+      image_message_size: "Ảnh upload tối đa cho phép là 1MB",
+      attachment_message_size: "Tệp tin đính kèm upload tối đa cho phép là 1MB",
   },
   transSuccess : {
     userCreated : (email) =>{
@@ -22,7 +37,9 @@ module.exports =  {
     loginSuccess : (username)=>{
       return `Xin chào ${username}`;
     },
-    logout_success : "Đăng xuất thành công",
+    logout_success: "Đăng xuất tài khoản thành công!",
+    user_info_updated: "Cập nhật thông tin người dùng thành công.",
+    user_password_updated: "Cập nhật mật khẩu thành công."
   },
   transMail : {
     subject : "TDMU Chat : Xác nhận kích hoạt tài khoản ",

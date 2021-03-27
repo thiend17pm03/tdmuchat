@@ -1,8 +1,8 @@
 const UserModel = require('../models/userModel')
 const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid');
-const {transErrors,transSuccess,transMail} = require('./../../lang/vi');
-const sendMail  = require ('./../config/mailer');
+const {transErrors,transSuccess,transMail} = require('../../lang/vi');
+const sendMail  = require ('../config/mailer');
 
 let saltRounds = 7;
 

@@ -6,7 +6,7 @@ const passport = require('passport');
 const getLoginRegister = (req,res)=>{
     return res.render("auth/master",{
       errors : req.flash('errors'),
-      success : req.flash('success')
+      success : req.flash('success'),
     });
 }
 

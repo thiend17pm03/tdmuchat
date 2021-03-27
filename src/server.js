@@ -7,6 +7,54 @@ const connectFlash = require('connect-flash');
 const configSession = require('./config/session');
 const env = require('./../env/env');
 const passport = require('passport');
+const pem = require('pem');
+const https = require('https')
+
+// pem.config({
+//     pathOpenSSL: 'C:\\Program Files\\OpenSSL-Win64\\bin\\openssl'
+//   });
+
+// pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
+//     if (err) {
+//       throw err
+//     }
+//     let app = express();
+
+//     // config DB
+//     connectDB();
+    
+//     // config Sesion
+//     configSession(app);
+    
+//     // config View Engine
+//     viewEngine(app);
+    
+//     // Enable post data for request
+//     app.use(express.urlencoded({ extended: true }));
+    
+//     // Enable connect Flash
+//     app.use(connectFlash());
+    
+//     //config passport
+//     app.use(passport.initialize());
+//     app.use(passport.session()); 
+    
+//     // init routes 
+//     initRoutes(app); 
+    
+    
+//     app.get("/",((req,res)=>{
+//      res.send("<h1>Hello</h1>")
+//     })) 
+   
+//     https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(env.APP_PORT,env.APP_HOST,()=>{
+//         console.log(`listen at: ${env.APP_HOST}:${env.APP_PORT}`)
+//     })
+//   })
+
+
+
+
 
 
 let app = express();
