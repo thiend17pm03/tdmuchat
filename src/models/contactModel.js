@@ -29,7 +29,63 @@ ContactSchema.statics = {
       }).exec();
     },
 
-    
+      /**
+   * Check exists of 2 user
+   * @param {string} userId 
+   * @param {string} contactId 
+   */
+  checkExists(userId, contactId) {
+    return this.findOne({
+      $or: [
+        {$and: [
+          {"userId": userId},
+          {"contactId": contactId}
+        ]},
+        {$and: [
+          {"userId": contactId},
+          {"contactId": userId}
+        ]}
+      ]
+    }).exec();
+  },
+
+  /**
+   * Remove contact
+   * @param {string} userId 
+   * @param {string} contactId 
+   */
+  removeContact(userId, contactId) {
+    return this.deleteMany({
+      $or: [
+        {$and: [
+          {"userId": userId},
+          {"contactId": contactId},
+          {"status": true}
+        ]},
+        {$and: [
+          {"userId": contactId},
+          {"contactId": userId},
+          {"status": true}
+        ]}
+      ]
+    }).exec();
+  },
+
+  /**
+   * Remove request contact sent
+   * @param {string} userId 
+   * @param {string} contactId 
+   */
+  removeRequestContactSent(userId, contactId) {
+    return this.deleteMany({
+      $and: [
+        {"userId": userId},
+        {"contactId": contactId},
+        {"status": false}
+      ]
+    }).exec();
+  },
+
 }
 
 

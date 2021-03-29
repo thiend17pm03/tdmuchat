@@ -14,10 +14,10 @@ let findUsersContact = (currentUserId, keyword) => {
       deprecatedUserIds.push(contact.contactId);
     });
 
-    console.log(deprecatedUserIds);
+    //console.log(deprecatedUserIds);
     deprecatedUserIds = _.uniqBy(deprecatedUserIds); // lodash để lọc dữ liệu trùng trong mảng
-    console.log(deprecatedUserIds);
-    console.log(keyword);
+    //console.log(deprecatedUserIds);
+    //console.log(keyword);
     let users = await UserModel.findAllForAddContact(deprecatedUserIds, keyword);
     resolve(users);
   });
@@ -37,12 +37,12 @@ let addNew = (currentUserId, contactId) => {
     let newContact = await ContactModel.createNew(newContactItem);
 
     // create notification
-    let notificationItem = {
-      senderId: currentUserId,
-      receiverId: contactId,
-      type: NotificationModel.types.ADD_CONTACT,
-    };
-    await NotificationModel.model.createNew(notificationItem);
+    // let notificationItem = {
+    //   senderId: currentUserId,
+    //   receiverId: contactId,
+    //   type: NotificationModel.types.ADD_CONTACT,
+    // };
+    // await NotificationModel.model.createNew(notificationItem);
 
     resolve(newContact);
   });
@@ -51,7 +51,7 @@ let addNew = (currentUserId, contactId) => {
 let removeContact = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     let removeContact = await ContactModel.removeContact(currentUserId, contactId);
-    if (removeContact.result.n === 0) {
+    if (removeContact.n === 0) {
       return reject(false);
     }
     resolve(true);
@@ -61,12 +61,12 @@ let removeContact = (currentUserId, contactId) => {
 let removeRequestContactSent = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     let removeReq = await ContactModel.removeRequestContactSent(currentUserId, contactId);
-    if (removeReq.result.n === 0) {
+    if (removeReq.n === 0) {
       return reject(false);
     }
     // remove notification
-    let notifTypeAddContact = NotificationModel.types.ADD_CONTACT;
-    await NotificationModel.model.removeRequestContactSentNotification(currentUserId, contactId, notifTypeAddContact);
+    // let notifTypeAddContact = NotificationModel.types.ADD_CONTACT;
+    // await NotificationModel.model.removeRequestContactSentNotification(currentUserId, contactId, notifTypeAddContact);
     resolve(true);
   });
 };
@@ -74,7 +74,7 @@ let removeRequestContactSent = (currentUserId, contactId) => {
 let removeRequestContactReceived = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     let removeReq = await ContactModel.removeRequestContactReceived(currentUserId, contactId);
-    if (removeReq.result.n === 0) {
+    if (removeReq.n === 0) {
       return reject(false);
     }
     // remove notification Chức năng này chưa muốn làm =))

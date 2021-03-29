@@ -24,10 +24,8 @@ let initRoutes = (app) =>{
     // app.get("/auth", authController.getLoginRegister) 
     // app.get("/logout", authController.getLogout) 
     
+    router.get("/",controllers.auth.checkLoginIn,controllers.home.getHome),
     
-
-    router.get("/auth",controllers.auth.checkLoginOut, controllers.auth.getLoginRegister) 
-
     router.get("/logout",controllers.auth.checkLoginIn, controllers.auth.getLogout) 
 
     router.post("/register",controllers.auth.checkLoginOut,authValid.register,controllers.auth.postRegister); 
@@ -41,6 +39,7 @@ let initRoutes = (app) =>{
       failureFlash : true,
     }))
 
+    router.get("/auth",controllers.auth.checkLoginOut, controllers.auth.getLoginRegister) ;
     router.get("/auth/facebook",controllers.auth.checkLoginOut,passport.authenticate('facebook',{scope:["email"]}));
     router.get("/auth/facebook/callback",controllers.auth.checkLoginOut,passport.authenticate('facebook',{
       successRedirect : '/',
@@ -52,14 +51,16 @@ let initRoutes = (app) =>{
       failureRedirect : '/auth',
      }));
 
-     router.get("/",controllers.auth.checkLoginIn,controllers.home.getHome),
-     router.put("/user/update-avatar",controllers.auth.checkLoginIn,controllers.user.updateAvatar);
-     router.put("/user/update-info",controllers.auth.checkLoginIn,userValid.updateInfo,controllers.user.updateInfo);
-     router.put("/user/update-password",controllers.auth.checkLoginIn,userValid.updatePassword,controllers.user.updatePassword);
-     router.get("/contact/find-users/:keyword",
+    router.put("/user/update-avatar",controllers.auth.checkLoginIn,controllers.user.updateAvatar);
+    router.put("/user/update-info",controllers.auth.checkLoginIn,userValid.updateInfo,controllers.user.updateInfo);
+    router.put("/user/update-password",controllers.auth.checkLoginIn,userValid.updatePassword,controllers.user.updatePassword);
+
+    router.get("/contact/find-users/:keyword",
      controllers.auth.checkLoginIn,
      contactValid.findUsersContact,
      controllers.contact.findUsersContact);
+    router.post("/contact/add-new", controllers.auth.checkLoginIn, controllers.contact.addNew);
+    router.delete("/contact/remove-request-contact-sent", controllers.auth.checkLoginIn, controllers.contact.removeRequestContactSent);
 
 
   return app.use('/',router)

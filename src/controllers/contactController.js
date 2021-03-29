@@ -20,7 +20,7 @@ let findUsersContact = async (req, res) => {
     let keyword = req.params.keyword;
     
     let users = await contact.findUsersContact(currentUserId, keyword);
-    console.log(users);
+    //console.log(users);
     return res.render("main/contact/sections/_findUsersContact", {users});
   } catch (error) {
     return res.status(500).send(error);
