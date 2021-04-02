@@ -125,7 +125,7 @@ let readMoreContactsReceived = async (req, res) => {
     return res.status(500).send(error);
   }
 };
-
+ 
 let searchFriends = async (req, res) => {
   let errorArr = [];
   let validationErrors = validationResult(req);

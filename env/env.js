@@ -11,6 +11,10 @@ const env = {
   APP_HOST : 'localhost',
   APP_PORT : '8000',
 
+  // Config session key & secret
+  SESSION_KEY : "express.sid",
+  SESSION_SECRET : "mySecret",
+
   // config admin email account
   MAIL_USER : 'thiend17pm03@gmail.com',
   MAIL_PASSWORD : '11012000',

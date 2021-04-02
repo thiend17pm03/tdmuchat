@@ -37,12 +37,12 @@ let addNew = (currentUserId, contactId) => {
     let newContact = await ContactModel.createNew(newContactItem);
 
     // create notification
-    // let notificationItem = {
-    //   senderId: currentUserId,
-    //   receiverId: contactId,
-    //   type: NotificationModel.types.ADD_CONTACT,
-    // };
-    // await NotificationModel.model.createNew(notificationItem);
+    let notificationItem = {
+      senderId: currentUserId,
+      receiverId: contactId,
+      type: NotificationModel.types.ADD_CONTACT,
+    };
+    await NotificationModel.model.createNew(notificationItem);
 
     resolve(newContact);
   });
@@ -64,9 +64,9 @@ let removeRequestContactSent = (currentUserId, contactId) => {
     if (removeReq.n === 0) {
       return reject(false);
     }
-    // remove notification
-    // let notifTypeAddContact = NotificationModel.types.ADD_CONTACT;
-    // await NotificationModel.model.removeRequestContactSentNotification(currentUserId, contactId, notifTypeAddContact);
+      ///remove notification
+      let notifTypeAddContact = NotificationModel.types.ADD_CONTACT;
+      await NotificationModel.model.removeRequestContactSentNotification(currentUserId, contactId, notifTypeAddContact);
     resolve(true);
   });
 };

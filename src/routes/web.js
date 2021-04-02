@@ -62,6 +62,9 @@ let initRoutes = (app) =>{
     router.post("/contact/add-new", controllers.auth.checkLoginIn, controllers.contact.addNew);
     router.delete("/contact/remove-request-contact-sent", controllers.auth.checkLoginIn, controllers.contact.removeRequestContactSent);
 
+    router.get("/notification/read-more", controllers.auth.checkLoginIn, controllers.notification.readMore);
+    router.put("/notification/mark-all-as-read", controllers.auth.checkLoginIn, controllers.notification.markAllAsRead);
+
 
   return app.use('/',router)
 }

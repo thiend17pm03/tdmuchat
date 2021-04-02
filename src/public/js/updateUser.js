@@ -268,6 +268,7 @@ function callUpdateUserPassword() {
 
       // reset all
       $("#input-btn-cancel-update-user-password").click();
+      
     },
   });
 }

@@ -14,7 +14,7 @@ let DB_CONNECTION = 'mongodb';
 /**
  * This variable is where save sesion, in this case mongodb
  */
-let sesionStore  = MongoStore.create({
+let sessionStore  = MongoStore.create({
   mongoUrl: `${env.DB_CONNECTION}://${env.DB_HOST}:${env.DB_PORT}/${env.DB_NAME}`,
   autoRemove: 'native' // Default
 })
@@ -23,11 +23,11 @@ let sesionStore  = MongoStore.create({
  * Config sesion for app
  * @param app from exactly express module
  */
-const configSesion = (app) =>{
+const config = (app) =>{
   app.use(session({
     key: "express.sid",
     secret : "mySecret",
-    store : sesionStore,
+    store : sessionStore,
     resave : true,
     saveUninitialized : false,
     cookie : {
@@ -36,4 +36,7 @@ const configSesion = (app) =>{
   }))
 }
 
-module.exports = configSesion;
+module.exports = {
+  config: config,
+  sessionStore: sessionStore
+};
