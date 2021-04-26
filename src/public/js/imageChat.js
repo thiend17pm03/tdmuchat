@@ -67,12 +67,12 @@ function imageChat(divId) {
         $(`.person[data-chat=${divId}]`).find("span.preview").html("Hình ảnh...");
 
         // Step 05: Move conversation to the top
-        $(`.person[data-chat=${divId}]`).on("trungquandev.moveConversationToTheTop", function() {
+        $(`.person[data-chat=${divId}]`).on("x.moveConversationToTheTop", function() {
           let dataToMove = $(this).parent();
           $(this).closest("ul").prepend(dataToMove);
-          $(this).off("trungquandev.moveConversationToTheTop");
+          $(this).off("x.moveConversationToTheTop");
         });
-        $(`.person[data-chat=${divId}]`).trigger("trungquandev.moveConversationToTheTop");
+        $(`.person[data-chat=${divId}]`).trigger("x.moveConversationToTheTop");
 
         // Step 06: Emit real-time
         socket.emit("chat-image", dataToEmit);
@@ -131,12 +131,12 @@ $(document).ready(function() {
     $(`.person[data-chat=${divId}]`).find("span.preview").html("Hình ảnh...");
 
     // Step 05: Move conversation to the top
-    $(`.person[data-chat=${divId}]`).on("trungquandev.moveConversationToTheTop", function() {
+    $(`.person[data-chat=${divId}]`).on("x.moveConversationToTheTop", function() {
       let dataToMove = $(this).parent();
       $(this).closest("ul").prepend(dataToMove);
-      $(this).off("trungquandev.moveConversationToTheTop");
+      $(this).off("x.moveConversationToTheTop");
     });
-    $(`.person[data-chat=${divId}]`).trigger("trungquandev.moveConversationToTheTop");
+    $(`.person[data-chat=${divId}]`).trigger("x.moveConversationToTheTop");
 
     // Step 06: Emit realtime: nothing to code :|
     // Step 07: Emit remove typing real-time : nothing to code :|

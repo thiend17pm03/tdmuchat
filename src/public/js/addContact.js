@@ -62,6 +62,6 @@ socket.on("response-add-new-contact", function(user) {
     `;
   $("#request-contact-received").find("ul").prepend(userInfoHtml);
 
- // removeRequestContactReceived(); // js/removeRequestContactReceived.js
-  // approveRequestContactReceived(); // js/approveRequestContactReceived.js
+ removeRequestContactReceived(); // js/removeRequestContactReceived.js
+ approveRequestContactReceived(); // js/approveRequestContactReceived.js
 });

@@ -1,0 +1,61 @@
+<nav class="navbar navbar-light no-margin-bottom" ">
+  <div class="container-fluid navbar-post">
+      <div class="navbar-header col-sm-2 navbar-left">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="#" target="__blank">
+              <img src="images/logo_favicon/logo.png" alt="logo-tdmu-chat">
+          </a>
+      </div>
+      <div class="col-sm-3 no-padding">
+          <ul class="nav navbar-nav navbar-left no-padding-start">
+              <li>
+                  <input type="text" name="search" class="searchBox" placeholder="Tìm kiếm tên cuộc trò chuyện">
+              </li>
+          </ul>
+      </div>
+      <div class="collapse navbar-collapse col-sm-7 navbar-right" id="myNavbar">
+          <ul class="nav navbar-nav navbar-right">
+              <li>
+                  <a href=javascript:void(0) title="Trang chủ">
+                      <span>Trang chủ</span>
+                  </a>
+              </li>
+              <li>
+                <a href="/" title="Chat">
+                    <span>Trò chuyện</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" title="Thời gian biểu">
+                    <span>Thời gian biểu</span>
+                </a>
+            </li>
+              <li class="dropdown " id="dropdown-navbar-user" data-uid="<%= user._id %>" >
+                  <a class="dropdown-toggle textuid" data-toggle="dropdown" href="#">
+                      <img id="navbar-avatar" class="avatar-small" src="images/users/<%= user.avatar %> " alt="">
+                      <span id="navbar-username"><%= user.username %></span>
+                      <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li>
+                          <a href="/profile" data-toggle="modal">
+                              <i class="fa fa-cog"></i>
+                              &nbsp;Cài đặt tài khoản
+                          </a>
+                      </li>
+                      <li>
+                          <a href="/logout">
+                              <i class="fa fa-sign-out"></i>
+                              &nbsp;Đăng xuất
+                          </a>
+                      </li>
+                  </ul>
+              </li>
+          </ul>
+      </div>
+  </div>
+</nav>

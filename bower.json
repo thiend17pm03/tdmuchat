@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "bower_components": "https://github.com/thiend17pm03/tdmu-chat-bower.git"
+    "bower_components": "https://github.com/thiend17pm03/tdmu-chat-bower.git",
+    "emojione": "4.5.0"
   }
 }

@@ -4,6 +4,7 @@ const passportgoogle = require('passport-google-oauth2') ;
 const {transErrors,transSuccess} = require('../../../lang/vi');
 const env = require('../../../env/env');
 const axios = require('axios');
+const ChatGroupModel = require('./../../models/chatGroupModel')
 const { response } = require('express');
 
 let googleStrategy = passportgoogle.Strategy;
@@ -63,14 +64,18 @@ const initPassportGoogle = ()=>{
    * Khi sever.js -> app.use(passport.sesion) thì nó sẽ gọi đến thằng này
    */
 
-  passport.deserializeUser((id,done)=>{
-    UserModel.findUserById(id)
-      .then(user=>{
-          return done(null,user);
-      })
-      .catch(err=>{
-        return done(err, null);
-      });
+  passport.deserializeUser(async(id,done)=>{
+    try {
+      let user = await UserModel.findUserByIdForSessionToUse(id);
+      let getChatGroupIds = await ChatGroupModel.getChatGroupIdsByUser(user._id);
+
+      user = user.toObject();
+      user.chatGroupIds = getChatGroupIds;
+
+      return done(null, user);
+    } catch (error) {
+      return done(error, null);
+    }
   })
 
 

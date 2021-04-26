@@ -102,7 +102,7 @@ function callCreateGroupChat() {
           <a href="#uid_${data.groupChat._id}" class="room-chat" data-target="#to_${data.groupChat._id}">
             <li class="person group-chat" data-chat="${data.groupChat._id}">
                 <div class="left-avatar">
-                    <img src="images/users/group-avatar-trungquandev.png" alt="">
+                    <img src="images/users/group-avatar.png" alt="">
                 </div>
                 <span class="name">
                     <span class="group-chat-name">
@@ -263,7 +263,7 @@ $(document).ready(function() {
       <a href="#uid_${response.groupChat._id}" class="room-chat" data-target="#to_${response.groupChat._id}">
         <li class="person group-chat" data-chat="${response.groupChat._id}">
             <div class="left-avatar">
-                <img src="images/users/group-avatar-trungquandev.png" alt="">
+                <img src="images/users/group-avatar.png" alt="">
             </div>
             <span class="name">
                 <span class="group-chat-name">

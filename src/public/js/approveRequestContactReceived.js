@@ -31,7 +31,7 @@ function approveRequestContactReceived() {
 
           decreaseNumberNotification("noti_contact_counter", 1); // js/caculateNotification.js
 
-          removeContact(); // js/removeContact.js
+         removeContact(); // js/removeContact.js
 
           socket.emit("approve-request-contact-received", {contactId: targetId});
 

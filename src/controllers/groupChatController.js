@@ -1,13 +1,14 @@
-import {validationResult} from "express-validator/check";
-import {groupChat} from "./../services/index";
+const {validationResult} = require("express-validator");
+const {groupChat} = require("./../services/index");
 // extras
-import ejs from "ejs";
-import {promisify} from "util";
+const ejs = require("ejs");
+const {promisify} = require("util");
 
 // Make renderFile available with async await
 const renderFile = promisify(ejs.renderFile).bind(ejs); // extras
  
 let addNewGroup = async (req, res) => {
+  //console.log(req.body);
   let errorArr = [];
   let validationErrors = validationResult(req);
 
