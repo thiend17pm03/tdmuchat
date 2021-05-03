@@ -7,6 +7,8 @@ const messageController = require("./messageController");
 const groupChatController = require("./groupChatController");
 const extrasController = require("./extrasController");
 const postController = require("./postController");
+const profileController = require("./profileController");
+const adminController = require("./adminController");
 
 
 module.exports = {
@@ -20,6 +22,8 @@ module.exports = {
   groupChat : groupChatController,
   extras : extrasController,
   post : postController,
+  profile : profileController,
+  admin : adminController,
 
   
  }

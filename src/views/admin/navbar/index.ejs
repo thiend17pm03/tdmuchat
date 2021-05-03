@@ -10,28 +10,26 @@
               <img src="/images/logo_favicon/logo.png" alt="logo-tdmu-chat">
           </a>
       </div>
-      <div class="col-sm-3 no-padding">
-          <ul class="nav navbar-nav navbar-left no-padding-start">
-              <li>
-                  <input type="text" name="search" class="searchBox" placeholder="Tìm kiếm tên cuộc trò chuyện">
-              </li>
-          </ul>
-      </div>
       <div class="collapse navbar-collapse col-sm-7 navbar-right" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
               <li>
-                  <a href=javascript:void(0) title="Trang chủ">
+                  <a href="/post" title="Trang chủ">
                       <span>Trang chủ</span>
                   </a>
               </li>
               <li>
-                <a href="/" title="Chat">
-                    <span>Trò chuyện</span>
+                <a href="/admin/post" title="Post">
+                    <span>Quản lý bài đăng</span>
                 </a>
             </li>
             <li>
-                <a href="#" title="Thời gian biểu">
-                    <span>Thời gian biểu</span>
+                <a href="/admin/user" title="User">
+                    <span>Quản lý User</span>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/ad" title="Admin">
+                    <span>Xem danh sách Admin</span>
                 </a>
             </li>
               <li class="dropdown " id="dropdown-navbar-user" data-uid="<%= user._id %>" >
@@ -42,7 +40,7 @@
                   </a>
                   <ul class="dropdown-menu">
                       <li>
-                          <a href="/profile" data-toggle="modal">
+                          <a href="/profile/<%= user._id %>" data-toggle="modal">
                               <i class="fa fa-cog"></i>
                               &nbsp;Cài đặt tài khoản
                           </a>

@@ -94,6 +94,13 @@ let initRoutes = (app) =>{
     router.put("/notification/mark-all-as-read", controllers.auth.checkLoginIn, controllers.notification.markAllAsRead);
 
     router.get("/post",controllers.auth.checkLoginIn, controllers.post.getPost);
+    router.get("/post/view/:postId",controllers.auth.checkLoginIn, controllers.post.viewPost);
+
+    router.get("/profile/:profileId",controllers.auth.checkLoginIn, controllers.profile.viewProfile);
+
+    router.get("/admin/post",controllers.auth.checkLoginIn, controllers.admin.getPost);
+    router.get("/admin/user",controllers.auth.checkLoginIn, controllers.admin.getUser);
+    router.get("/admin/ad",controllers.auth.checkLoginIn, controllers.admin.getAd);
 
 
   return app.use('/',router)
