@@ -6,35 +6,49 @@
     <div class="col-sm-9">
       <div class="row no-margin profile-box-info">
         <div class="col-sm-3">
-          <img class="avt-profile" src="/images/users/1617181701861-764bb7f3-1334-4f01-aaa0-0cab825f893b-icon.jpg" alt="avt-user-comment-post">
+          <img class="avt-profile" src="/images/users/<%= profile.avatar %>  " alt="avt-user-comment-post">
         </div>
+        
         <div class="col-sm-8">
 
           <div class="row no-margin profile-row-info">
             <div class="col-sm-3 profile-lable">Email: </div>
-            <div class="col-sm-9"><input type="text" disabled class="form-control modal-title-row text-input" id=""  required></div>
+            <div class="col-sm-9"><input type="text" value="<% if (profile.email != null) { %>  <%=profile.email  %> <% } else {%> Chưa cập nhật <% } %>   " disabled class="form-control modal-title-row text-input" id="profile-update-email"  required></div>
           </div>
           <div class="row no-margin profile-row-info">
             <div class="col-sm-3 profile-lable">UserName:</div>
-            <div class="col-sm-9"><input type="text" class="form-control modal-title-row text-input" id=""  required></div>
+            <div class="col-sm-9"><input type="text" value="<% if (profile.username != null) { %> <%= profile.username %>  <% } else {%> Chưa cập nhật <% } %>   " <% if (update == false) { %> disabled <% } %> class="form-control modal-title-row text-input" id="profile-update-username"  required></div>
           </div>
           <div class="row no-margin profile-row-info">
             <div class="col-sm-3 profile-lable">Giới tính:</div>
-            <div class="col-sm-9"><input type="text" class="form-control modal-title-row text-input" id=""  required></div>
+            <div class="col-sm-9">
+              <div class="row no-margin">
+                <label class="radio-inline col-lg-2">Nam
+                  <input  id="input-change-gender-male" type="radio" name="gender" value="male" <% if (profile.gender != "female") { %> checked <% } %> required>
+                  <span class="checkmark"></span>
+              </label>
+              <label class="radio-inline col-lg-2">Nữ
+                  <input id="input-change-gender-female" type="radio" name="gender" value="female" <% if (profile.gender === "female") { %> checked <% } %> required>
+                  <span class="checkmark"></span>
+              </label>  
+              </div>
+            </div>
           </div>
           <div class="row no-margin profile-row-info">
             <div class="col-sm-3 profile-lable">Địa chỉ:</div>
-            <div class="col-sm-9"><input type="text" class="form-control modal-title-row text-input" id=""  required></div>
+            <div class="col-sm-9"><input type="text" value="<% if (profile.address != null) { %> <%= profile.address %>  <% } else {%> Chưa cập nhật <% } %>   " <% if (update == false) { %> disabled <% } %> class="form-control modal-title-row text-input" id="profile-update-address"  required></div>
           </div>
           <div class="row no-margin profile-row-info">
             <div class="col-sm-3 profile-lable">Số điện thoại:</div>
-            <div class="col-sm-9"><input type="text" class="form-control modal-title-row text-input" id=""  required></div>
+            <div class="col-sm-9"><input type="text" value="<% if (profile.phone != null) { %> <%= profile.phone %>  <% } else {%> Chưa cập nhật <% } %>   " <% if (update == false) { %> disabled <% } %> class="form-control modal-title-row text-input" id="profile-update-phone"  required></div>
           </div>
+          <% if (update == true) { %>
           <div class="row no-margin profile-btn-row">
             <div class="col-sm-6"></div>
             <div class="col-sm-2">
                 <button
                 type="button"
+                id = "profile-update-btn"
                 class="btn btn-custom btn-success"
                 >Cập nhật</button>
             </div>
@@ -42,11 +56,13 @@
             <div class="col-sm-2 ">
                 <button
                 type="button"
+                id="profile-update-btn-cancel"
                 class="btn btn-custom btn-warning" 
                 >Reset</button> 
             </div>
           </div>
 
+          <% } %> 
 
 
         </div>
@@ -58,84 +74,19 @@
       </div>
       <div class="row no-margin  profile-box-post-detail">
         <div class="col-sm-12 no-padding">
+          <% if(showPost == false){ %> 
+            <div class="row no-margin" style="font-size: 18px; text-align: center;">Không có bài đăng</div>
+            <% }; %> 
+          <% posts.forEach(function(post) { %>
+          <div class="row no-margin profile-row-post-detail">
+            <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/<%= post._id %>"><%= post.title %></a></div>
+            <div class="col-sm-3 profile-row-post-detail-day"><span><%= convertTimestampToDMY(post.createdAt) %></span></div>
+            <div class="col-sm-2 ">
+              <button type="button" data-profile="true" class="btn btn-custom btn-danger post-btn-delete" data-postid="<%= post._id %>">Xóa</button>
+            </div>
+          </div>
+          <% }); %> 
 
-          <div class="row no-margin profile-row-post-detail">
-            <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/12">Templates for Developing Web Page Templates for Developing Web Page  for Developing Web Page for Developing Web Page g Web Page for Developing Web Page</a></div>
-            <div class="col-sm-3 profile-row-post-detail-day"><span>10/12/2021</span></div>
-            <div class="col-sm-2 ">
-              <button type="button" class="btn btn-custom btn-danger">Xóa</button>
-            </div>
-          </div>
-          <div class="row no-margin profile-row-post-detail">
-            <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/12">Templates for Developing Web Page Templates for Developing Web Page  for Developing Web Page for Developing Web Page g Web Page for Developing Web Page</a></div>
-            <div class="col-sm-3 profile-row-post-detail-day"><span>10/12/2021</span></div>
-            <div class="col-sm-2 ">
-              <button type="button" class="btn btn-custom btn-danger">Xóa</button>
-            </div>
-          </div>
-          <div class="row no-margin profile-row-post-detail">
-            <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/12">Templates for Developing Web Page Templates for Developing Web Page  for Developing Web Page for Developing Web Page g Web Page for Developing Web Page</a></div>
-            <div class="col-sm-3 profile-row-post-detail-day"><span>10/12/2021</span></div>
-            <div class="col-sm-2 ">
-              <button type="button" class="btn btn-custom btn-danger">Xóa</button>
-            </div>
-          </div>
-          <div class="row no-margin profile-row-post-detail">
-            <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/12">Templates for Developing Web Page Templates for Developing Web Page  for Developing Web Page for Developing Web Page g Web Page for Developing Web Page</a></div>
-            <div class="col-sm-3 profile-row-post-detail-day"><span>10/12/2021</span></div>
-            <div class="col-sm-2 ">
-              <button type="button" class="btn btn-custom btn-danger">Xóa</button>
-            </div>
-          </div>
-          <div class="row no-margin profile-row-post-detail">
-            <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/12">Templates for Developing Web Page Templates for Developing Web Page  for Developing Web Page for Developing Web Page g Web Page for Developing Web Page</a></div>
-            <div class="col-sm-3 profile-row-post-detail-day"><span>10/12/2021</span></div>
-            <div class="col-sm-2 ">
-              <button type="button" class="btn btn-custom btn-danger">Xóa</button>
-            </div>
-          </div>
-          <div class="row no-margin profile-row-post-detail">
-            <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/12">Templates for Developing Web Page Templates for Developing Web Page  for Developing Web Page for Developing Web Page g Web Page for Developing Web Page</a></div>
-            <div class="col-sm-3 profile-row-post-detail-day"><span>10/12/2021</span></div>
-            <div class="col-sm-2 ">
-              <button type="button" class="btn btn-custom btn-danger">Xóa</button>
-            </div>
-          </div>
-          <div class="row no-margin profile-row-post-detail">
-            <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/12">Templates for Developing Web Page Templates for Developing Web Page  for Developing Web Page for Developing Web Page g Web Page for Developing Web Page</a></div>
-            <div class="col-sm-3 profile-row-post-detail-day"><span>10/12/2021</span></div>
-            <div class="col-sm-2 ">
-              <button type="button" class="btn btn-custom btn-danger">Xóa</button>
-            </div>
-          </div>
-          <div class="row no-margin profile-row-post-detail">
-            <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/12">Templates for Developing Web Page Templates for Developing Web Page  for Developing Web Page for Developing Web Page g Web Page for Developing Web Page</a></div>
-            <div class="col-sm-3 profile-row-post-detail-day"><span>10/12/2021</span></div>
-            <div class="col-sm-2 ">
-              <button type="button" class="btn btn-custom btn-danger">Xóa</button>
-            </div>
-          </div>
-          <div class="row no-margin profile-row-post-detail">
-            <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/12">Templates for Developing Web Page Templates for Developing Web Page  for Developing Web Page for Developing Web Page g Web Page for Developing Web Page</a></div>
-            <div class="col-sm-3 profile-row-post-detail-day"><span>10/12/2021</span></div>
-            <div class="col-sm-2 ">
-              <button type="button" class="btn btn-custom btn-danger">Xóa</button>
-            </div>
-          </div>
-          <div class="row no-margin profile-row-post-detail">
-            <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/12">Templates for Developing Web Page Templates for Developing Web Page  for Developing Web Page for Developing Web Page g Web Page for Developing Web Page</a></div>
-            <div class="col-sm-3 profile-row-post-detail-day"><span>10/12/2021</span></div>
-            <div class="col-sm-2 ">
-              <button type="button" class="btn btn-custom btn-danger">Xóa</button>
-            </div>
-          </div>
-          <div class="row no-margin profile-row-post-detail">
-            <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/12">Templates for Developing Web Page Templates for Developing Web Page  for Developing Web Page for Developing Web Page g Web Page for Developing Web Page</a></div>
-            <div class="col-sm-3 profile-row-post-detail-day"><span>10/12/2021</span></div>
-            <div class="col-sm-2 ">
-              <button type="button" class="btn btn-custom btn-danger">Xóa</button>
-            </div>
-          </div>
 
         </div>
       </div>
@@ -146,4 +97,11 @@
   </div>
 </div>
 
-
+<!-- 
+<div class="row no-margin profile-row-post-detail">
+  <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/12">Templates for Developing Web Page Templates for Developing Web Page  for Developing Web Page for Developing Web Page g Web Page for Developing Web Page</a></div>
+  <div class="col-sm-3 profile-row-post-detail-day"><span>10/12/2021</span></div>
+  <div class="col-sm-2 ">
+    <button type="button" class="btn btn-custom btn-danger">Xóa</button>
+  </div>
+</div> -->

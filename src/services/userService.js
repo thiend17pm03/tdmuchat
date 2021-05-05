@@ -12,6 +12,14 @@ const saltRounds = 7;
   return UserModel.updateUser(id, item);
 };
 
+let findUserById = (id) => {
+  
+  return new Promise(async (resolve, reject) => {
+    let user = await UserModel.findUserById(id);
+    resolve(user.toObject());
+  });
+}
+
 /**
  * Update password for user
  * @param {userId} id 
@@ -38,4 +46,5 @@ const saltRounds = 7;
 module.exports = {
   updateUser: updateUser,
   updatePassword : updatePassword,
+  findUserById : findUserById,
 }

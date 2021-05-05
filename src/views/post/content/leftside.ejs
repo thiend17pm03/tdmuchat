@@ -13,19 +13,9 @@
             title="Tạo 1 bài đăng mới"></a>
     </div>
 </div>
-          <div class="row no-margin d-flex align-items-center catelogy-item"><a href="#"> Kỹ thuật công nghệ</a></div>
-          <div class="row no-margin d-flex align-items-center catelogy-item"><a href="#"> Luật</a></div>
-          <div class="row no-margin d-flex align-items-center catelogy-item"><a href="#"> Quản lý nhà nước</a></div>
-          <div class="row no-margin d-flex align-items-center  catelogy-item"><a href="#"> Kỹ thuật phần mềm</a></div>
-          <div class="row no-margin d-flex align-items-center catelogy-item"><a href="#"> jbasjb cua bcuas ciabs gcabs cbasj cbasj bcsa cbais cbica bca ibca bica cab bca bia bica  bca ibca bica cab bca bia bica  bca ibca bica cab bca bia bica  bca ibca bica cab bca bia bica </a></div>
-          <div class="row no-margin d-flex align-items-center catelogy-item"><a href="#"> Hệ thống thông tin</a></div>
-          <div class="row no-margin d-flex align-items-center catelogy-item"><a href="#"> Kĩ năng</a></div>
-          <div class="row no-margin d-flex align-items-center catelogy-item"><a href="#"> Kĩ năng</a></div>
-          <div class="row no-margin d-flex align-items-center catelogy-item"><a href="#"> Ngoại ngữ không chuyên</a></div>
-          <div class="row no-margin d-flex align-items-center catelogy-item"><a href="#"> Ngoại ngữ không chuyên</a></div>
-          <div class="row no-margin d-flex align-items-center catelogy-item"><a href="#"> Ngoại ngữ không chuyên</a></div>
-          <div class="row no-margin d-flex align-items-center catelogy-item"><a href="#"> Khác</a></div>
-
+        <% allTag.forEach(function(item) { %>
+          <div class="row no-margin d-flex align-items-center catelogy-item"><a href="/post/tag/<%= item._id %>"> <%= item.name %></a></div>
+          <% }); %>
   </div>
 </div>
 
@@ -42,20 +32,19 @@
             <div class="modal-body">
                 <div class="row no-margin modal-title-row">
                     <div class="col-sm-2 modal-title-row-label ">Tiêu đề:</div>
-                    <div class="col-sm-9"><input type="text" class="form-control modal-title-row input" id="" placeholder="Nhập tiêu đề bài viết" required></div>
+                    <div class="col-sm-9"><input type="text" class="form-control modal-title-row input" id="post-createNew-title" placeholder="Nhập tiêu đề bài viết" required></div>
                 </div>
                 <div class="row no-margin modal-description-row">
                     <div class="col-sm-2 modal-description-row-label">Mô tả:</div>
-                    <div class="col-sm-9 modal-description-row-input"><textarea class="form-control" rows="14" id="" placeholder="Nhập nội dung bài viết"></textarea></div>
+                    <div class="col-sm-9 modal-description-row-input"><textarea class="form-control" rows="14" id="post-createNew-description" placeholder="Nhập nội dung bài viết"></textarea></div>
                 </div>
                 <div class="row no-margin modal-tag-row">
                     <div class="col-sm-2 modal-tag-row-label">Tags:</div>
                     <div class="col-sm-7">
-                        <select class="form-control" id="select-type-chat">
-                            <option  value="post-new">Kỹ thuật phàn mèm</option>
-                            <option  value="post-popular ">luật</option>
-                            <option  value="post-friends">Bài đăng của bạn bè</option>
-                            <option  value="post-liked">Bài đăng đã thích</option>
+                        <select class="form-control" name = "post-createNew-Tag" id="post-createNew-Tag">
+                            <% allTag.forEach(function(item) { %>
+                            <option  value="<%= item._id %>"><%= item.name %> </option>
+                            <% }); %> 
                         </select>
                     </div>
                     
@@ -65,6 +54,7 @@
                     <div class="col-sm-2 ">
                         <button
                         type="button"
+                        id = "post-createNew-btn"
                         class="btn btn-custom btn-success"
                         >Đăng tải</button>
                       </div>

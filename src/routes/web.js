@@ -53,6 +53,7 @@ let initRoutes = (app) =>{
 
     router.put("/user/update-avatar",controllers.auth.checkLoginIn,controllers.user.updateAvatar);
     router.put("/user/update-info",controllers.auth.checkLoginIn,userValid.updateInfo,controllers.user.updateInfo);
+    router.put("/user/update-info2",controllers.auth.checkLoginIn,userValid.updateInfo,controllers.user.updateInfo2);
     router.put("/user/update-password",controllers.auth.checkLoginIn,userValid.updatePassword,controllers.user.updatePassword);
 
     router.get("/contact/find-users/:keyword",
@@ -94,13 +95,25 @@ let initRoutes = (app) =>{
     router.put("/notification/mark-all-as-read", controllers.auth.checkLoginIn, controllers.notification.markAllAsRead);
 
     router.get("/post",controllers.auth.checkLoginIn, controllers.post.getPost);
+    router.post("/post/new",controllers.auth.checkLoginIn, controllers.post.createPost);
     router.get("/post/view/:postId",controllers.auth.checkLoginIn, controllers.post.viewPost);
+    router.put("/post/like/:postId",controllers.auth.checkLoginIn, controllers.post.likePost);
+    router.delete("/post/:postId",controllers.auth.checkLoginIn, controllers.post.deletePost);
+
+    router.post("/post/comment/vote/:commentId",controllers.auth.checkLoginIn, controllers.post.voteComment);
+    router.post("/post/comment/child/:commentId",controllers.auth.checkLoginIn, controllers.post.addNewCommentChild);
+    router.post("/post/comment/:postId",controllers.auth.checkLoginIn, controllers.post.addNewComment);
+
+    router.post("/tag/new",controllers.auth.checkLoginIn, controllers.tag.createNewTag);
 
     router.get("/profile/:profileId",controllers.auth.checkLoginIn, controllers.profile.viewProfile);
 
     router.get("/admin/post",controllers.auth.checkLoginIn, controllers.admin.getPost);
     router.get("/admin/user",controllers.auth.checkLoginIn, controllers.admin.getUser);
+    router.put("/admin/user/addad/:id",controllers.auth.checkLoginIn, controllers.admin.addAd);
+    router.delete("/admin/user/delete/:id",controllers.auth.checkLoginIn, controllers.admin.deleteUser);
     router.get("/admin/ad",controllers.auth.checkLoginIn, controllers.admin.getAd);
+    router.put("/admin/ad/delete/:id",controllers.auth.checkLoginIn, controllers.admin.deleteAd);
 
 
   return app.use('/',router)

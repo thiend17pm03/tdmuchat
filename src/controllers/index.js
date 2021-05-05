@@ -9,6 +9,7 @@ const extrasController = require("./extrasController");
 const postController = require("./postController");
 const profileController = require("./profileController");
 const adminController = require("./adminController");
+const tagController = require("./tagController");
 
 
 module.exports = {
@@ -24,6 +25,7 @@ module.exports = {
   post : postController,
   profile : profileController,
   admin : adminController,
+  tag : tagController,
 
   
  }

@@ -84,6 +84,25 @@ let updateInfo = async (req, res) => {
   }
 }
 
+let updateInfo2 = async (req, res) => {
+
+  try {
+    let updateUserItem = req.body;
+    await user.updateUser(req.user._id, updateUserItem);
+
+    let result = {
+      message: transSuccess.user_info_updated,
+    };
+
+    return res.status(200).send(result);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+}
+
+
+
 let updatePassword = async (req, res) => {
   let errorArr = [];
   let validationErrors = validationResult(req);
@@ -113,5 +132,6 @@ let updatePassword = async (req, res) => {
 module.exports = {
   updateAvatar: updateAvatar,
   updateInfo: updateInfo,
-  updatePassword: updatePassword
+  updatePassword: updatePassword,
+  updateInfo2 : updateInfo2,
 };

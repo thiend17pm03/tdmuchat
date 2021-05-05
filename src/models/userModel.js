@@ -41,6 +41,9 @@ UserSchema.statics = {
   findUserByIdToUpdatePassword(id) {
     return this.findById(id).exec();
   },
+  findUserById(id) {
+    return this.findOne({_id : id},{_id: 1, email : 1, username: 1, address: 1, avatar: 1,gender : 1,phone:1,email :1}).exec();
+  },
   removeById(id){
     return this.findByIdAndRemove(id).exec(); 
   },
@@ -90,7 +93,7 @@ UserSchema.statics = {
     ).exec();
   },
   getNormalUserDataById(id) {
-    return this.findById(id, {_id: 1, username: 1, address: 1, avatar: 1}).exec();
+    return this.findById(id, {_id: 1,email:1, username: 1, address: 1, avatar: 1}).exec();
   },
 
   /**
@@ -128,6 +131,15 @@ UserSchema.statics = {
       ]
     }, {_id: 1, username: 1, address: 1, avatar: 1}).exec();
   },
+  getAllUser(){
+    return this.aggregate([
+      { "$match": { "createdAt": {$gte: 1000}} },//lớn hơn bằng 1000
+      { "$sort": { "createdAt": -1 } },
+    ]).exec();
+  },
+  deleteUser(id){
+    return this.findByIdAndDelete(id).exec();
+  }
 
 }
 

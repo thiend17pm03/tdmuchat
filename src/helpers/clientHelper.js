@@ -18,10 +18,38 @@ const convertTimestampToHumanTime = (timestamp) => {
   return moment(timestamp).locale("vi").startOf("seconds").fromNow();
 };
 
+const convertTimestampToDMY = (timestamp) => {
+  if (!timestamp) {
+    return "";
+  }
+  return moment(timestamp).locale("vi").format('L');;
+};
+
+const checkLikePost = (arr,userId) =>{
+  let check = false;
+  if(arr){
+    arr.forEach(item=>{
+      userId = userId +"";
+      item.userId = item.userId+"";
+      if(item.userId == userId ) check = true;
+
+    });
+  }
+  return check;
+}
+
+const checkAllowDelete = (postId, userId) =>{
+  postId = postId+ "";
+  userId = userId +"";
+  if(postId == userId ) return true;
+  return false;
+}
 module.exports = {
   bufferToBase64 : bufferToBase64,
   lastItemOfArray : lastItemOfArray,
   convertTimestampToHumanTime: convertTimestampToHumanTime,
-
+  convertTimestampToDMY : convertTimestampToDMY,
+  checkLikePost : checkLikePost,
+  checkAllowDelete : checkAllowDelete,
 
 }

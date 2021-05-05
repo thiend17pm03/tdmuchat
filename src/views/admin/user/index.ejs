@@ -19,17 +19,23 @@
       </div>
       <div class="row no-margin  admin-box-detail">
         <div class="col-sm-12 no-padding">
-
+          <% users.forEach(function(useritem) { %>
+            
           <div class="row no-margin admin-row-detail">
-            <div class="col-sm-2 admin-row-text "><a href="/post/profile/12">thiencafe2018  fias nhvdasv d dub dán jydhasd asxyhsad d đáivsa xjsavdsaivd sa asdijbas dsausadhsa  jdiadjh asbasjdsavd jas xjasdysavd á vadkjaid san adkjsadn asjh sacd sadbaudjbas d</a></div>
-            <div class="col-sm-3 admin-row-text"><span>thiencafe2018@gmail.com</span></div>
-            <div class="col-sm-2 no-padding admin-row-text-center"><span>0978973382</span></div>
-            <div class="col-sm-2 no-padding admin-row-day"><span>10/11/2021</span></div>
-            <div class="col-sm-2"><button type="button" class="btn  btn-warning">Đặt làm QTV</button></div>
+            <div class="col-sm-2 admin-row-text "><a href="/post/profile/<%= useritem._id %>"> <%= useritem.username %></a></div>
+            <div class="col-sm-3 admin-row-text"><span><%= useritem.local.email %></span></div>
+            <div class="col-sm-2 no-padding admin-row-text-center"><span><%= useritem.phone %></span></div>
+            <div class="col-sm-2 no-padding admin-row-day"><span> <%= convertTimestampToDMY(useritem.createdAt) %>  </span></div>
+            <div class="col-sm-2">
+              <button type="button" 
+               data-uid="<%= useritem._id %>" <% if(useritem.role == "admin"){ %> disabled <% }; %>  class="btn  btn-warning admin-btn-add-qtv">Đặt làm QTV
+              </button>
+            </div>
             <div class="col-sm-1">
-              <button type="button" class="btn  btn-danger">Xóa</button>
+              <button type="button" data-uid="<%= useritem._id %>" class="btn  btn-danger admin-btn-delete-user">Xóa</button>
             </div>
           </div>
+          <% }); %> 
 
 
 
