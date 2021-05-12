@@ -27,6 +27,28 @@ let findPostByUserId = (userId)=>{
 let getAllPost = (limit = 50)=>{
   return new Promise(async (resolve, reject) => {
     let Posts = await postModel.getAllPost(limit);
+    //console.log(Posts);
+    resolve(Posts);
+  });
+}
+
+let getAllPostSortByLike = (type,limit = 50)=>{
+  return new Promise(async (resolve, reject) => {
+    let Posts = await postModel.getAllPostSortByLike(limit);
+    
+    resolve(Posts);
+  });
+}
+let searchPost = (key,limit = 50)=>{
+  return new Promise(async (resolve, reject) => {
+    let Posts = await postModel.searchPost(key,limit);
+    resolve(Posts);
+  });
+}
+let getPostByTag  = (id,limit = 50)=>{
+  return new Promise(async (resolve, reject) => {
+    let Posts = await postModel.getPostByTag(id,limit);
+    // console.log(id);
     resolve(Posts);
   });
 }
@@ -43,11 +65,28 @@ let getPostById = (id)=>{
   });
 } 
 
-let getCommentByPostId = (id)=>{
+let getCommentByPostId = (id,type = "active")=>{
   return new Promise(async (resolve, reject) => {
     let commentItem = null;
+    
     try {
-       commentItem = await commentModel.getCommentByPostId(id);
+      switch (type) {
+        case "vote":
+          commentItem = await commentModel.getCommentVoteByPostId(id);
+          
+
+          break;
+        case "lastest":
+          commentItem = await commentModel.getCommentByPostId(id,type);
+          
+          break;
+      
+        default:
+          commentItem = await commentModel.getCommentActiveByPostId(id,type);
+          
+          break;
+      }
+       
     } catch (error) {
       resolve(commentItem);
     }
@@ -150,4 +189,7 @@ module.exports = {
   getCommentByPostId : getCommentByPostId,
   addNewCommentChild : addNewCommentChild,
   updateVoteComment : updateVoteComment,
+  getPostByTag : getPostByTag,
+  getAllPostSortByLike: getAllPostSortByLike,
+  searchPost : searchPost,
 }

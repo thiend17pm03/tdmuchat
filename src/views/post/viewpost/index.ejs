@@ -9,7 +9,7 @@
       
       <div class="row no-margin">
         <div class="view-post-title">
-          <span><%= post.title %> </span>
+          <span><%= convertTexarea(post.title) %> </span>
         </div>
       </div>
       <div class="row no-margin view-post-info">
@@ -38,16 +38,17 @@
          
         <div class="col-sm-2"></div>
         <div class="col-sm-6 no-padding" >
-          <span>by:&nbsp;</span><a href="#">@<%= post.userinfo.username %> </a>&Tab;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span>by:&nbsp;</span><a href="/profile/<%= post.userinfo._id%>">@<%= post.userinfo.username %> </a>&Tab;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <i class="fa fa-heart">&nbsp;</i><span class="like-amount" data-postid="<%= post._id%>"><%= post.likeAmount%> </span>&Tab;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <i class="fa fa-comment">&nbsp;</i><span class="comment-amount" data-postid="<%= post._id%>" ><%= post.commentAmount %> </span>&Tab;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <i class="fa fa-calendar">&nbsp;</i><span><%= convertTimestampToDMY(post.createdAt)%> </span>&Tab;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
       </div>
       <div class="row no-margin view-post-description">
-        <span><%= post.description %> </span>
+        <span><%- convertTexarea(post.description) %> </span>
         
       </div>
+      
       <div class="row no-margin ">
         <div class="col-sm-1"></div>
         <div class="col-sm-9 no-padding">
@@ -64,9 +65,9 @@
       <!-- filter -->
       <div class="row no-margin filter-box">
         <div class="post-filter-comment">
-          <div class="post-filter-comment-active"><a href="#" >Active</a></div>
-          <div class="post-filter-comment-oldest"><a href="#" >Oldest</a></div>
-          <div class="post-filter-comment-votes"><a href="#" >Votes</a></div>
+          <div data-postid="<%= post._id %>" data-typecomment = "active" class="post-filter-comment-active post-filter-comment-type">Active</div>
+          <div data-postid="<%= post._id %>" data-typecomment = "lastest" class="post-filter-comment-oldest post-filter-comment-type">Lastest</div>
+          <div data-postid="<%= post._id %>" data-typecomment = "vote" class="post-filter-comment-votes post-filter-comment-type">Votes</div>
         </div>
       <div class="row post-answer">
 
@@ -79,141 +80,10 @@
   <div class="col-12 no-padding" id="row-post-comment" data-postid="<%= post._id %>">
 
 
-    <% commentdata.forEach(function(comment) { %>
-    <div class="row view-post-comment">
-      <div class="col-sm-2 view-post-comment-left">
-        <div class="row no-margin vote-count">
-          <i class='fas fa-check-double' style='font-size:30px;color:#44bd32'></i>
-          <span class="comment-vote-amount" data-commentid="<%=  comment._id%>"><%=  comment.voteAmout %></span>
-        </div>
-        <div class="row no-margin"><span>Votes</span></div>
-        <div class="row no-margin">
-          <button
-          type="button"
-          data-commentid="<%=  comment._id%>"
-          class="btn btn-custom btn-primary post-btn-comment-vote" style="width: 100px; margin-top: 50px;"
-          >Bình chọn</button> 
-        </div>
-      </div>
-      <div class="col-sm-10  view-post-comment-right">
-        <div class="row view-comment-info">
-          <div class="col-sm-1 no-padding">
-            <img class="avt-img" src="/images/users/<%=  comment.userinfo.avatar %>" alt="avt-user-comment-post">
-          </div>
-          <div class="col-sm-2 no-padding">
-            <a href="/profile/<%=  comment.userinfo._id %>">@<%=  comment.userinfo.username %></a>
-          </div>
-          <div class="col-sm-3">
-            <i class="fa fa-calendar">&nbsp;</i><span><%= convertTimestampToDMY(comment.createdAt) %> </span>&Tab;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </div>
-          <div class="col-sm-7">
-          </div>
-        </div>
-        <div class="row no-margin view-comment-content">
-          <span>
-            <%=  comment.content %>
-            </span>
-        </div>
-        <div data-commentid="<%=  comment._id%>" class="comment-box-small">
-         
-         <% if(comment.childComent != null || comment.childComent !=undefined) {%> 
-          <% comment.childComent.forEach(function(childcomment) { %>
-            <div class="row view-comment-small">
-              <a href="/profile/<%=  childcomment.userId %>">@<%=  childcomment.userName%></a>
-              <span>:&nbsp;&nbsp;&nbsp;</span>
-              <span><%=  childcomment.content%>
-              </span>
-            </div>
-            <% }); %> 
-         <% }; %> 
-          
-        </div>
-        <div class="row no-margin " style="margin-top: 10px;">
-          <div class="col-sm-1"></div>
-          <div class="col-sm-9 no-padding">
-            <textarea  data-commentid="<%=  comment._id%>" class="form-control post-comment-text-child" rows="1"  placeholder="Nhập câu trả lời của bạn"></textarea>
-          </div>
-          <div class="col-sm-2">
-            <button
-            type="button"
-            data-commentid="<%=  comment._id%>"
-            class="btn btn-custom btn-success post-btn-comment-child" style="width: 100px;"
-            >Gửi</button> 
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <% }); %> 
+    <%- include('dataComment')  ;%> 
 
 
 
-    <div class="row view-post-comment">
-      <div class="col-sm-2 view-post-comment-left">
-        <div class="row no-margin vote-count">
-          <i class='fas fa-check-double' style='font-size:30px;color:#44bd32'></i>
-          <span>450</span>
-        </div>
-        <div class="row no-margin"><span>Votes</span></div>
-        <div class="row no-margin">
-          <button
-          type="button"
-          class="btn btn-custom btn-primary post-btn-like" style="width: 100px; margin-top: 50px;"
-          >Bình chọn</button> 
-        </div>
-      </div>
-      <div class="col-sm-10  view-post-comment-right">
-        <div class="row view-comment-info">
-          <div class="col-sm-1 no-padding">
-            <img class="avt-img" src="/images/users/1617181701861-764bb7f3-1334-4f01-aaa0-0cab825f893b-icon.jpg" alt="avt-user-comment-post">
-          </div>
-          <div class="col-sm-2 no-padding">
-            <a href="#">@thiencafe</a>
-          </div>
-          <div class="col-sm-3">
-            <i class="fa fa-calendar">&nbsp;</i><span>20/10/2021</span>&Tab;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </div>
-          <div class="col-sm-7">
-          </div>
-        </div>
-        <div class="row no-margin view-comment-content">
-          <span>
-            I learned how with Flask using this tutorial. It's for creating a blog, but you can apply the concepts to other types of websites
-            It is time consuming and will feel cumbersome at first, but it teaches you some extra things you need to know if you want the web page to be interactive, store data, etc.
-            
-            </span>
-        </div>
-        <div class="comment-box-small">
-          <div class="row view-comment-small">
-            <span>My problem was that I want to show / hide text on span with mouse click. So by default short text with dots is shown and by clicking long text appears. Clicking again hides that long text and shows short one again.
-            </span>
-          </div>
-          <div class="row view-comment-small">
-            <a href="#">@thiencafe</a>
-            <span>:&nbsp;&nbsp;&nbsp;</span>
-            <span>My problem was that I want to show / hide text on span with mouse click. So by default short text with dots is shown and by clicking long text appears. Clicking again hides that long text and shows short one again.
-            </span>
-          </div>
-          <div class="row view-comment-small">
-            <span>My problem was that I want to show / hide text on span with mouse click. So by default short text with dots is shown and by clicking long text appears. Clicking again hides that long text and shows short one again.
-            </span>
-          </div>
-        </div>
-        <div class="row no-margin " style="margin-top: 10px;">
-          <div class="col-sm-1"></div>
-          <div class="col-sm-9 no-padding">
-            <textarea class="form-control" rows="1" id="" placeholder="Nhập câu trả lời của bạn"></textarea>
-          </div>
-          <div class="col-sm-2">
-            <button
-            type="button"
-            class="btn btn-custom btn-success post-btn-like" style="width: 100px;"
-            >Gửi</button> 
-          </div>
-        </div>
-      </div>
-    </div>
 
 
   </div>

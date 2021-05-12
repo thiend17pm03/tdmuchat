@@ -30,7 +30,7 @@ let UserSchema = new Schema({
   updatedAt : {type: Number, default: null},
   deletedAt : {type: Number, default: null},
 });
-
+UserSchema.index({'$**': 'text'});
 UserSchema.statics = {
   createNew(item) {
     return this.create(item);
@@ -139,7 +139,14 @@ UserSchema.statics = {
   },
   deleteUser(id){
     return this.findByIdAndDelete(id).exec();
-  }
+  },
+  searchUser(keyword,limit) {
+    return this.aggregate([
+      { "$match": { $text: { $search: keyword } } },
+      { "$sort": { "createdAt": -1 } },
+      { "$limit": limit },
+    ]).exec();
+  },
 
 }
 

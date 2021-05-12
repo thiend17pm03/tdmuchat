@@ -1,3 +1,10 @@
+function resizeNineScrollViewPost() {
+  $(".view-post-box-content").getNiceScroll().resize();
+}
+function resizeNineScrollLeft() {
+  $(".right").getNiceScroll().resize();
+}
+
 function nineScrollLeft() {
   $('.left').niceScroll({
     smoothscroll: true,
@@ -7,10 +14,6 @@ function nineScrollLeft() {
     scrollspeed: 50
   });
 }
-function resizeNineScrollLeft() {
-  $(".left").getNiceScroll().resize();
-}
-
 
 function nineScrollRight() {
   $('.right').niceScroll({

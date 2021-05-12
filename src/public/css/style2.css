@@ -473,6 +473,7 @@
   width: 240px;
   text-align: center;
   display: flex;
+  color: #337ab7;
 }
 .post-filter-comment > a:hover,
 .post-filter-comment > a:visited,

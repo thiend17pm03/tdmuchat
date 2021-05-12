@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/thiend17pm03/tdmuchat#readme",
   "dependencies": {
+    "akismet-api": "^5.1.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "bluebird": "^3.7.2",

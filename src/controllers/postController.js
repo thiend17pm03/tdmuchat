@@ -1,5 +1,6 @@
 const {tag,post} = require("./../services/index");
-const {convertTimestampToDMY,checkLikePost,checkAllowDelete} = require("./../helpers/clientHelper");
+const {convertTimestampToDMY,checkLikePost,convertTexarea,checkAllowDelete} = require("./../helpers/clientHelper");
+const { dectectComment } = require('./../util/akismentSp');
 
 
 const createPost = async (req,res) =>{
@@ -29,6 +30,7 @@ const createPost = async (req,res) =>{
 const getPost = async (req,res) =>{
   let posts = await post.getAllPost();
   let allTag = await tag.getAll();
+  //console.log();
   res.render('post/content/index',{
     user : req.user,
     allTag,
@@ -36,6 +38,59 @@ const getPost = async (req,res) =>{
     convertTimestampToDMY:convertTimestampToDMY,
     checkLikePost : checkLikePost,
     checkAllowDelete : checkAllowDelete,
+    convertTexarea : convertTexarea,
+  });
+}
+
+const getAllPostSortByLike = async (req,res) =>{
+  
+
+  let type = req.body.type;
+  let posts = null;
+  if (type == "like") {
+    posts = await post.getAllPostSortByLike(type);
+  } else {
+    posts = await post.getAllPost();
+  }
+
+  
+  res.render('post/content/dataRightSide',{
+    posts,
+    user : req.user,
+    convertTimestampToDMY:convertTimestampToDMY,
+    checkLikePost : checkLikePost,
+    checkAllowDelete : checkAllowDelete,
+    convertTexarea: convertTexarea,
+  });
+}
+const searchPost = async (req,res) =>{
+  
+  let key = req.body.key;
+  let posts = null;
+  posts = await post.searchPost(key);
+  res.render('post/content/dataRightSide',{
+    user : req.user,
+    posts,
+    convertTimestampToDMY:convertTimestampToDMY,
+    checkLikePost : checkLikePost,
+    checkAllowDelete : checkAllowDelete,
+    convertTexarea : convertTexarea,
+  });
+}
+
+const getPostByTag = async (req,res) =>{
+  
+  let allTag = await tag.getAll();
+  let tagId = req.params.id;
+  let posts = await post.getPostByTag(tagId);
+  res.render('post/content/index',{
+    user : req.user,
+    allTag,
+    posts,
+    convertTimestampToDMY:convertTimestampToDMY,
+    checkLikePost : checkLikePost,
+    checkAllowDelete : checkAllowDelete,
+    convertTexarea : convertTexarea
   });
 }
 
@@ -76,8 +131,28 @@ const viewPost = async (req,res) =>{
     checkLikePost : checkLikePost,
     checkAllowDelete : checkAllowDelete,
     commentdata,
+    convertTexarea,
   });
 }
+
+const getCommentByType = async (req,res) =>{
+  let postId = req.body.postId;
+  let type = req.body.type;
+  //let postdata = await post.getPostById(postId);
+  let commentdata = await post.getCommentByPostId(postId,type);
+  //console.log(type);
+  if(!commentdata) return res.send("Không có dữ liệu");
+  res.render('post/viewpost/dataComment',{
+    user : req.user,
+    convertTimestampToDMY: convertTimestampToDMY,
+    checkLikePost : checkLikePost,
+    checkAllowDelete : checkAllowDelete,
+    commentdata,
+    convertTexarea: convertTexarea,
+  });
+}
+
+
 
 const updatepost =async ()=>{
     try {
@@ -113,13 +188,29 @@ let addNewComment= async (req,res)=>{
     try {
       let  userId = req.user._id;
       let data = req.body;
-      postid = req.params.postId
+      postid = req.params.postId;
+      let userAgent = req.headers['user-agent'];
+      let userIp = req.ip;
+      let permalink = `${req.protocol}://${req.headers.host}${req.originalUrl}`;
+      const commentCheck = {
+        ip: userIp,
+        useragent: userAgent,
+        content: data.content,
+        permalink : permalink,
+        type : "comment",
+      }
+      let isSpam = false;
+      isSpam = await dectectComment(commentCheck);
+      
       let commentItem = {
         ...data,
         userId,
+        isSpam,
       }
       let newComment = await post.addNewComment(commentItem);
+      //console.log(newComment);
       let updateCommentCount = post.updatePostComment(postid);
+      
       
       return res.status(200).send({success: !!newComment,newComment});
     } catch (error) {
@@ -164,5 +255,9 @@ module.exports = {
   addNewComment : addNewComment,
   voteComment : voteComment,
   addNewCommentChild : addNewCommentChild,
+  getPostByTag: getPostByTag,
+  getAllPostSortByLike : getAllPostSortByLike,
+  searchPost : searchPost,
+  getCommentByType : getCommentByType,
 }
 

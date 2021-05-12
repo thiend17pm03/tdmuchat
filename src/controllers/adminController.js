@@ -12,10 +12,34 @@ const getPost = async (req,res) =>{
     checkAllowDelete : checkAllowDelete,
   });
 }
+const searchPost = async (req,res) =>{
+  let key = req.body.key;
+  let posts = await post.searchPost(key);
+  //console.log(posts);
+  
+  res.render('admin/post/dataAdmin',{
+    user : req.user,
+    posts,
+    convertTimestampToDMY:convertTimestampToDMY,
+    checkLikePost : checkLikePost,
+    checkAllowDelete : checkAllowDelete,
+  });
+}
 
 const getUser = async (req,res) =>{
   let users = await admin.getAllUser();
   res.render('admin/user/index',{
+    user : req.user,
+    users,
+    convertTimestampToDMY:convertTimestampToDMY,
+    checkLikePost : checkLikePost,
+    checkAllowDelete : checkAllowDelete,
+  });
+}
+const searchUser = async (req,res) =>{
+  let key = req.body.key;
+  let users = await admin.searchUser(key);
+  res.render('admin/user/dataUser',{
     user : req.user,
     users,
     convertTimestampToDMY:convertTimestampToDMY,
@@ -66,7 +90,7 @@ const deleteUser = async (req,res) => {
   try {
     
     let id = req.params.id;
-  
+    
     let result = await admin.deleteUser(id);
     return res.status(200).send(result);
   } catch (error) {
@@ -82,5 +106,7 @@ module.exports = {
   deleteAd : deleteAd,
   addAd : addAd,
   deleteUser : deleteUser,
+  searchPost : searchPost,
+  searchUser : searchUser,
 }
 

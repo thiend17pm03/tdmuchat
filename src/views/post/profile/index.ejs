@@ -82,7 +82,9 @@
             <div class="col-sm-6 profile-row-post-detail-name "><a href="/post/view/<%= post._id %>"><%= post.title %></a></div>
             <div class="col-sm-3 profile-row-post-detail-day"><span><%= convertTimestampToDMY(post.createdAt) %></span></div>
             <div class="col-sm-2 ">
+              <% if(checkAllowDelete(post.userId,user._id)){ %> 
               <button type="button" data-profile="true" class="btn btn-custom btn-danger post-btn-delete" data-postid="<%= post._id %>">Xóa</button>
+              <% }; %> 
             </div>
           </div>
           <% }); %> 

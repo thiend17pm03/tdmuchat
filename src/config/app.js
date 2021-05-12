@@ -10,5 +10,6 @@ module.exports = {
   image_message_limit_size: 1048576, // byte = 1MB
   attachment_message_directory: "src/public/images/chat/message",
   attachment_message_limit_size: 1048576, // byte = 1MB
+  api_akisment_key : "899929cbcbc7",
 },
 };

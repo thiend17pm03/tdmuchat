@@ -44,6 +44,13 @@ const checkAllowDelete = (postId, userId) =>{
   if(postId == userId ) return true;
   return false;
 }
+
+const convertTexarea = (text = " ") =>{
+  text = text.replace(/\n/gi, "<br/>" );
+  //console.log(text);
+  return text;
+}
+
 module.exports = {
   bufferToBase64 : bufferToBase64,
   lastItemOfArray : lastItemOfArray,
@@ -51,5 +58,6 @@ module.exports = {
   convertTimestampToDMY : convertTimestampToDMY,
   checkLikePost : checkLikePost,
   checkAllowDelete : checkAllowDelete,
+  convertTexarea : convertTexarea,
 
 }

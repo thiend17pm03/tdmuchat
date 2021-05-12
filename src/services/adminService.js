@@ -41,6 +41,13 @@ let getAllUser = ()=>{
   });
 }
 
+let searchUser = (key,limit=50)=>{
+  return new Promise(async (resolve, reject) => {
+    let users = await userModel.searchUser(key,limit);
+    resolve(users);
+  });
+}
+
 let deleteUser = (id)=>{
   return new Promise(async (resolve, reject) => {
     try {
@@ -59,4 +66,5 @@ module.exports = {
   getAllUser : getAllUser,
   deleteAdmin : deleteAdmin,
   deleteUser : deleteUser,
+  searchUser : searchUser,
 }

@@ -1,0 +1,10 @@
+<% posts.forEach(function(post) { %>
+  <div class="row no-margin admin-row-detail" data-postid="<%= post._id %>">
+    <div class="col-sm-5 admin-row-text "><a href="/post/view/<%= post._id %>"> <%= post.title %></a></div>
+    <div class="col-sm-2 admin-row-day"><span><%= convertTimestampToDMY(post.createdAt) %> </span></div>
+    <div class="col-sm-2 no-padding admin-row-text-center"><span>thiencafe</span></div>
+    <div class="col-sm-2 ">
+      <button data-postid="<%= post._id %>" type="button" class="btn btn-custom admin-btn-delete-post btn-danger">Xóa</button>
+    </div>
+  </div>
+  <% }); %> 

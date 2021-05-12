@@ -7,7 +7,7 @@
       <div class="row no-margin admin-box-search">
         
         <div class="col-sm-7 no-padding">
-          <input type="text" class="form-control modal-title-row admin-search-text-input" id="" placeholder="Tìm kiếm người dùng"  required>
+          <input type="text" class="form-control modal-title-row admin-search-text-input" id="text-input-search-user-admin" placeholder="Tìm kiếm người dùng"  required>
         </div>
         <div class="col-sm-1 " style="line-height: 30px; padding-left: 5px;" ><i class="fa fa-search" style="font-size:24px;color: #8877ea; "></i></div>
       </div>
@@ -18,25 +18,9 @@
         <div class="col-sm-2"><span>Ngày tạo</span></div>
       </div>
       <div class="row no-margin  admin-box-detail">
-        <div class="col-sm-12 no-padding">
-          <% users.forEach(function(useritem) { %>
-            
-          <div class="row no-margin admin-row-detail">
-            <div class="col-sm-2 admin-row-text "><a href="/post/profile/<%= useritem._id %>"> <%= useritem.username %></a></div>
-            <div class="col-sm-3 admin-row-text"><span><%= useritem.local.email %></span></div>
-            <div class="col-sm-2 no-padding admin-row-text-center"><span><%= useritem.phone %></span></div>
-            <div class="col-sm-2 no-padding admin-row-day"><span> <%= convertTimestampToDMY(useritem.createdAt) %>  </span></div>
-            <div class="col-sm-2">
-              <button type="button" 
-               data-uid="<%= useritem._id %>" <% if(useritem.role == "admin"){ %> disabled <% }; %>  class="btn  btn-warning admin-btn-add-qtv">Đặt làm QTV
-              </button>
-            </div>
-            <div class="col-sm-1">
-              <button type="button" data-uid="<%= useritem._id %>" class="btn  btn-danger admin-btn-delete-user">Xóa</button>
-            </div>
-          </div>
-          <% }); %> 
+        <div class="col-sm-12 no-padding" id="data-admin-user">
 
+          <%- include('dataUser'); %> 
 
 
         </div>

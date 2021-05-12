@@ -18,7 +18,7 @@ let postSchema = new Schema({
   deletedAt : {type: Number, default: null}, 
 });
 
-
+postSchema.index({'$**': 'text'});
 postSchema.statics = {
   createNew(item) {
     return this.create(item);
@@ -26,6 +26,24 @@ postSchema.statics = {
   findPostByUserId(userId){
     return this.find({userId}).sort({"createdAt": -1}).exec();
   },
+
+/*
+{ "$lookup": {
+        "localField": "userId" ,
+        "from": "users",
+        "foreignField": "_id",
+        "as": "userinfo"
+      } },
+      { "$unwind": "$userinfo" },
+      { "$lookup": {
+        "localField": "tagId" ,
+        "from": "tags",
+        "foreignField": "_id",
+        "as": "taginfo"
+      } },
+      { "$unwind": "$taginfo" },
+*/
+
   getAllPost(limit){
     return this.aggregate([
       { "$match": { "createdAt": {$gte: 1000}} },//lớn hơn bằng 1000
@@ -45,6 +63,92 @@ postSchema.statics = {
         "as": "taginfo"
       } },
       { "$unwind": "$taginfo" },
+      { "$lookup": {
+            "from": "comments",
+            "let": {"postId": "$_id"},
+          "pipeline": [
+            { "$match": {  $expr: { $eq: ["$$postId", "$postId"] } }  },
+              {
+                "$sort": {  "voteAmout": -1 }
+              },
+              {
+                "$limit": 1
+              },],
+            "as": "comment"
+      } },
+      { "$unwind": { path: "$comment", preserveNullAndEmptyArrays: true} },
+      
+    ]).exec();
+  },
+  getAllPostSortByLike(limit){
+    return this.aggregate([
+      { "$match": { "createdAt": {$gte: 1000}} },//lớn hơn bằng 1000
+      { "$sort": { "likeAmount": -1 } },
+      { "$limit": limit },
+      { "$lookup": {
+        "localField": "userId" ,
+        "from": "users",
+        "foreignField": "_id",
+        "as": "userinfo"
+      } },
+      { "$unwind": "$userinfo" },
+      { "$lookup": {
+        "localField": "tagId" ,
+        "from": "tags",
+        "foreignField": "_id",
+        "as": "taginfo"
+      } },
+      { "$unwind": "$taginfo" },
+      { "$lookup": {
+        "from": "comments",
+        "let": {"postId": "$_id"},
+        "pipeline": [
+          { "$match": {  $expr: { $eq: ["$$postId", "$postId"] } }  },
+            {
+              "$sort": {  "voteAmout": -1 }
+            },
+            {
+              "$limit": 1
+            },],
+          "as": "comment"
+        } },
+      { "$unwind": { path: "$comment", preserveNullAndEmptyArrays: true} },
+      
+    ]).exec();
+  },
+  getPostByTag (id,limit){
+    return this.aggregate([
+      { "$match": { "createdAt": {$gte: 1000}, "tagId" : mongoose.Types.ObjectId(id)} },//lớn hơn bằng 1000
+      { "$sort": { "createdAt": -1 } },
+      { "$limit": limit },
+      { "$lookup": {
+        "localField": "userId" ,
+        "from": "users",
+        "foreignField": "_id",
+        "as": "userinfo"
+      } },
+      { "$unwind": "$userinfo" },
+      { "$lookup": {
+        "localField": "tagId" ,
+        "from": "tags",
+        "foreignField": "_id",
+        "as": "taginfo"
+      } },
+      { "$unwind": "$taginfo" },
+      { "$lookup": {
+        "from": "comments",
+        "let": {"postId": "$_id"},
+        "pipeline": [
+          { "$match": {  $expr: { $eq: ["$$postId", "$postId"] } }  },
+            {
+              "$sort": {  "voteAmout": -1 }
+            },
+            {
+              "$limit": 1
+            },],
+          "as": "comment"
+        } },
+      { "$unwind": { path: "$comment", preserveNullAndEmptyArrays: true} },
       
     ]).exec();
   },
@@ -87,7 +191,31 @@ postSchema.statics = {
   },
   deletePost(id){
     return this.findByIdAndDelete(id).exec();
-  }
+  },
+  searchPost(keyword,limit) {
+    return this.aggregate([
+      { "$match": { $text: { $search: keyword } } },
+      { "$sort": { "createdAt": -1 } },
+      { "$limit": limit },
+      { "$lookup": {
+        "localField": "userId" ,
+        "from": "users",
+        "foreignField": "_id",
+        "as": "userinfo"
+      } },
+      { "$unwind": "$userinfo" },
+      { "$lookup": {
+        "localField": "tagId" ,
+        "from": "tags",
+        "foreignField": "_id",
+        "as": "taginfo"
+      } },
+      { "$unwind": "$taginfo" },
+      
+      
+    ]).exec();
+  },
+
 
 }
 

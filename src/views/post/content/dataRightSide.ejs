@@ -1,0 +1,62 @@
+<div class="right">
+
+  <% posts.forEach(function(post) { %>
+    <div class="box-post">
+      
+      <div class="row no-margin">
+        <div class="col-sm-2 center-content-all"> 
+          <div class="row no-margin post-like-count "><span class="like-amount" data-postid="<%=post._id%>"><%= post.likeAmount %></span></div>
+          <div class="row no-margin post-avt ">
+            <img src="/images/users/<%= post.userinfo.avatar %>" alt="avt-user-post">
+          </div>
+          <div class="row no-margin post-username"><%= post.userinfo.username %> </div>
+          <div class="row no-margin post-comment-count">comments : <%= post.commentAmount %> </div>
+          <div class="row no-margin post-catelogy"><a href="/post/tag/<%= post.tagId%> "><%= post.taginfo.name%></a></div>
+          <div class="row no-margin post-time"><%= convertTimestampToDMY(post.createdAt) %> </div>
+  
+        </div>
+        <div class="col-sm-9 center-content-all">
+          <div class="row no-margin post-title"><a href="/post/view/<%= post._id %>"><%- convertTexarea(post.title) %></a></div>
+          <div class="row no-margin post-description"><%-  convertTexarea(post.description) %></div>
+          <div class="row no-margin post-comment">
+            <% if(post.comment){ %> 
+              <%= post.comment.content %> 
+              <% } else { %> 
+                <div style="color:#5eabdc ">Chưa có bình luận</div>
+                <% }; %> 
+          </div>
+          <div class="row no-margin">
+            <div class="col-sm-3 ">
+              <button
+              type="button"
+              class="btn btn-custom btn-primary post-btn-like"
+              data-postid = "<%= post._id %>"
+              <% if(checkLikePost(post.likes,user._id) == true){ %> disabled <% }; %> 
+              >Yêu thích</button> 
+            </div>
+            <div class="col-sm-3 ">
+              <a href="/post/view/<%= post._id %>"  >
+                <button
+                type="button"
+                class="btn btn-custom btn-success post-btn-read-more"
+                
+                >Xem chi tiết >></button> 
+              </a>
+            </div>
+            <div class="col-sm-3 ">
+              <button
+              type="button"
+              class="btn btn-custom btn-warning post-btn-report"
+              >Báo cáo</button> 
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  
+    <% }); %> 
+
+
+
+</div>

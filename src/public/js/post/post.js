@@ -136,6 +136,32 @@ function postDelete() {
   });
   
 }
+function getPostByLike() {
+  $('select#select-type-post').on('change', function() {
+    let typeSL = this.value;
+    let type = "new";
+    if(typeSL== 'post-popular '){
+      type = "like";
+    }
+    try {
+      $.ajax({
+        url: `/post/`,
+        type: "post",
+        data: {type},
+        success: function(data) {
+          $('#data-right-side-box').empty();
+          $('#data-right-side-box').append(data);
+          
+        }
+      });
+      
+    } catch (error) {
+      
+    }
+  });
+
+     
+};
 
 function postAdminDelete() {
   $(".admin-btn-delete-post").unbind("click").on("click", function() {
@@ -180,6 +206,7 @@ function postComment() {
       alertify.notify("Bình luận thành công thành công", "success", 7);
       $(`#post-text-comment[data-postid=${targetId}]`).val("");
       let d = new Date().toLocaleDateString();
+      //let permalink = window.location.href;
       $.ajax({
         url: `/post/comment/${targetId}`,
         type: "post",
@@ -189,66 +216,25 @@ function postComment() {
         },
         success: function(data) {
           if (data.success) {
-            console.log(data);
-            let commentId = data.newComment._id;
-            let avt = $('#navbar-avatar').attr('src');
-            let userName =  $(`#navbar-username`).text().trim();
-            let userId = data.newComment.userId;
-            
-            $(`#row-post-comment[data-postid=${targetId}]`).prepend(`
-            <div class="row view-post-comment">
-            <div class="col-sm-2 view-post-comment-left">
-              <div class="row no-margin vote-count">
-                <i class='fas fa-check-double' style='font-size:30px;color:#44bd32'></i>
-                <span class="comment-vote-amount" data-commentid="${commentId}">0</span>
-              </div>
-              <div class="row no-margin"><span>Votes</span></div>
-              <div class="row no-margin">
-                <button
-                type="button"
-                class="btn btn-custom btn-primary post-btn-comment-vote" data-commentid="${commentId}" style="width: 100px; margin-top: 50px;"
-                >Bình chọn</button> 
-              </div>
-            </div>
-            <div class="col-sm-10  view-post-comment-right">
-              <div class="row view-comment-info">
-                <div class="col-sm-1 no-padding">
-                  <img class="avt-img" src="${avt}" alt="avt-user-comment-post">
-                </div>
-                <div class="col-sm-2 no-padding">
-                  <a href="/profile/${userId}">@${userName}</a>
-                </div>
-                <div class="col-sm-3">
-                  <i class="fa fa-calendar">&nbsp;</i><span>${d}</span>&Tab;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <div class="col-sm-7">
-                </div>
-              </div>
-              <div class="row no-margin view-comment-content">
-                <span>
-                  ${content}  
-                </span>
-              </div>
-              <div data-commentid="${commentId}" class="comment-box-small">
-                 
-                
-              </div>
-              <div class="row no-margin " style="margin-top: 10px;">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-9 no-padding">
-                  <textarea class="form-control post-comment-text-child" rows="1" data-commentid="${commentId}"  placeholder="Nhập câu trả lời của bạn"></textarea>
-                </div>
-                <div class="col-sm-2">
-                  <button
-                  type="button"
-                  data-commentid="${commentId}"
-                  class="btn btn-custom btn-success post-btn-comment-child" style="width: 100px;"
-                  >Gửi</button> 
-                </div>
-              </div>
-            </div>
-          </div>
-            `);
+            let dataItem = {
+              postId : targetId,
+              type : 'lastest',
+            }
+            try {
+              $.ajax({
+                url: `/post/view/comment`,
+                type: "post",
+                data: dataItem,
+                success: function(data) {
+                  $('#row-post-comment').empty();
+                  $('#row-post-comment').append(data);
+                  resizeNineScrollViewPost();
+                }
+              });
+              
+            } catch (error) {
+              
+            }
           }
         },
       });
@@ -338,6 +324,7 @@ function postCommentChild() {
               </span>
             </div>
             `);
+            resizeNineScrollViewPost();
 
           }
         },
@@ -370,7 +357,119 @@ function userAdminDelete() {
     }
   });
   
-}
+};
+
+function searchPost(){
+  $('#text-ipnut-search-post').on('keypress',function(e) {
+    if(e.which == 13) {
+        let key = $('#text-ipnut-search-post').val();
+        if (key.length < 1) {
+          alertify.notify("Vui lòng nhập từ khóa tìm kiếm","error",5);
+        }
+        else {
+          try {
+            $.ajax({
+              url: `/post/search`,
+              type: "post",
+              data: {key},
+              success: function(data) {
+                $('#data-right-side-box').empty();
+                $('#data-right-side-box').append(data);
+                
+              }
+            });
+            
+          } catch (error) {
+            
+          }
+        }
+    }
+});
+};
+function searchPostAdmin(){
+  $('#text-input-search-post-admin').on('keypress',function(e) {
+    if(e.which == 13) {
+        let key = $('#text-input-search-post-admin').val();
+        if (key.length < 1) {
+          alertify.notify("Vui lòng nhập từ khóa tìm kiếm","error",5);
+        }
+        else {
+          try {
+            $.ajax({
+              url: `/admin/post/search`,
+              type: "post",
+              data: {key},
+              success: function(data) {
+                $('#data-admin-post').empty();
+                $('#data-admin-post').append(data);
+                
+              }
+            });
+            
+          } catch (error) {
+            
+          }
+        }
+    }
+});
+};
+
+function getCommentByType(){
+  $(".post-filter-comment-type").unbind("click").on("click", function() {
+    let postId = $(this).data("postid");
+    let type = $(this).data("typecomment");
+    let dataItem = {
+      postId : postId,
+      type,
+    }
+    try {
+      $.ajax({
+        url: `/post/view/comment`,
+        type: "post",
+        data: dataItem,
+        success: function(data) {
+          $('#row-post-comment').empty();
+          $('#row-post-comment').append(data);
+          resizeNineScrollViewPost();
+        }
+      });
+      
+    } catch (error) {
+      
+    }
+
+  });
+
+};
+function searchUserAdmin(){
+  $('#text-input-search-user-admin').on('keypress',function(e) {
+    if(e.which == 13) {
+        let key = $('#text-input-search-user-admin').val();
+        if (key.length < 1) {
+          alertify.notify("Vui lòng nhập từ khóa tìm kiếm","error",5);
+        }
+        else {
+          try {
+            $.ajax({
+              url: `/admin/user/search`,
+              type: "post",
+              data: {key},
+              success: function(data) {
+                $('#data-admin-user').empty();
+                $('#data-admin-user').append(data);
+                
+              }
+            });
+            
+          } catch (error) {
+            
+          }
+        }
+    }
+});
+};
+
+
 function adminAddAdmin() {
   $(".admin-btn-add-qtv").unbind("click").on("click", function() { 
     try {
@@ -423,3 +522,76 @@ postComment();
 postCommentChild();
 postVoteComment();  
 postAdminDelete();
+getPostByLike();
+searchPost();
+searchPostAdmin();
+searchUserAdmin();
+getCommentByType()
+
+
+/* 
+ console.log(data);
+            let commentId = data.newComment._id;
+            let avt = $('#navbar-avatar').attr('src');
+            let userName =  $(`#navbar-username`).text().trim();
+            let userId = data.newComment.userId;
+            
+            $(`#row-post-comment[data-postid=${targetId}]`).prepend(`
+            <div class="row view-post-comment">
+            <div class="col-sm-2 view-post-comment-left">
+              <div class="row no-margin vote-count">
+                <i class='fas fa-check-double' style='font-size:30px;color:#44bd32'></i>
+                <span class="comment-vote-amount" data-commentid="${commentId}">0</span>
+              </div>
+              <div class="row no-margin"><span>Votes</span></div>
+              <div class="row no-margin">
+                <button
+                type="button"
+                class="btn btn-custom btn-primary post-btn-comment-vote" data-commentid="${commentId}" style="width: 100px; margin-top: 50px;"
+                >Bình chọn</button> 
+              </div>
+            </div>
+            <div class="col-sm-10  view-post-comment-right">
+              <div class="row view-comment-info">
+                <div class="col-sm-1 no-padding">
+                  <img class="avt-img" src="${avt}" alt="avt-user-comment-post">
+                </div>
+                <div class="col-sm-2 no-padding">
+                  <a href="/profile/${userId}">@${userName}</a>
+                </div>
+                <div class="col-sm-3">
+                  <i class="fa fa-calendar">&nbsp;</i><span>${d}</span>&Tab;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-7">
+                </div>
+              </div>
+              <div data-commentid="${commentId}" class="row no-margin view-comment-content">
+                <span>
+                  ${content}  
+                </span>
+              </div>
+              <div data-commentid="${commentId}" class="comment-box-small">
+                 
+                
+              </div>
+              <div class="row no-margin " style="margin-top: 10px;">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-9 no-padding">
+                  <textarea class="form-control post-comment-text-child" rows="1" data-commentid="${commentId}"  placeholder="Nhập câu trả lời của bạn"></textarea>
+                </div>
+                <div class="col-sm-2">
+                  <button
+                  type="button"
+                  data-commentid="${commentId}"
+                  class="btn btn-custom btn-success post-btn-comment-child" style="width: 100px;"
+                  >Gửi</button> 
+                </div>
+              </div>
+            </div>
+          </div>
+            `);
+            $(`.view-comment-content[data-commentid=${commentId}`).find("span").val().replace(/\n/gi,"<br/>");
+            
+            resizeNineScrollViewPost();
+
+*/

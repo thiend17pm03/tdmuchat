@@ -95,8 +95,13 @@ let initRoutes = (app) =>{
     router.put("/notification/mark-all-as-read", controllers.auth.checkLoginIn, controllers.notification.markAllAsRead);
 
     router.get("/post",controllers.auth.checkLoginIn, controllers.post.getPost);
+    router.get("/post/tag/:id",controllers.auth.checkLoginIn, controllers.post.getPostByTag);
     router.post("/post/new",controllers.auth.checkLoginIn, controllers.post.createPost);
+    router.post("/post/search",controllers.auth.checkLoginIn, controllers.post.searchPost);
+    router.post("/post",controllers.auth.checkLoginIn, controllers.post.getAllPostSortByLike);
     router.get("/post/view/:postId",controllers.auth.checkLoginIn, controllers.post.viewPost);
+    router.post("/post/view/comment",controllers.auth.checkLoginIn, controllers.post.getCommentByType);
+    
     router.put("/post/like/:postId",controllers.auth.checkLoginIn, controllers.post.likePost);
     router.delete("/post/:postId",controllers.auth.checkLoginIn, controllers.post.deletePost);
 
@@ -108,8 +113,12 @@ let initRoutes = (app) =>{
 
     router.get("/profile/:profileId",controllers.auth.checkLoginIn, controllers.profile.viewProfile);
 
+    
+    router.post("/admin/post/search",controllers.auth.checkLoginIn, controllers.admin.searchPost);
     router.get("/admin/post",controllers.auth.checkLoginIn, controllers.admin.getPost);
     router.get("/admin/user",controllers.auth.checkLoginIn, controllers.admin.getUser);
+    router.post("/admin/user/search",controllers.auth.checkLoginIn, controllers.admin.searchUser);
+    
     router.put("/admin/user/addad/:id",controllers.auth.checkLoginIn, controllers.admin.addAd);
     router.delete("/admin/user/delete/:id",controllers.auth.checkLoginIn, controllers.admin.deleteUser);
     router.get("/admin/ad",controllers.auth.checkLoginIn, controllers.admin.getAd);

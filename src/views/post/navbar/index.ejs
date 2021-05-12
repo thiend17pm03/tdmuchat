@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light no-margin-bottom" ">
+<nav class="navbar navbar-light no-margin-bottom" >
   <div class="container-fluid navbar-post">
       <div class="navbar-header col-sm-2 navbar-left">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -13,14 +13,14 @@
       <div class="col-sm-3 no-padding">
           <ul class="nav navbar-nav navbar-left no-padding-start">
               <li>
-                  <input type="text" name="search" class="searchBox" placeholder="Tìm kiếm tên cuộc trò chuyện">
+                  <input type="text" id="text-ipnut-search-post" name="search" class="searchBox" placeholder="Tìm kiếm bài đăng">
               </li>
           </ul>
       </div>
       <div class="collapse navbar-collapse col-sm-7 navbar-right" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
               <li>
-                  <a href=javascript:void(0) title="Trang chủ">
+                  <a href="/post" title="Trang chủ">
                       <span>Trang chủ</span>
                   </a>
               </li>
@@ -30,9 +30,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" title="Thời gian biểu">
-                    <span>Thời gian biểu</span>
-                </a>
+                
             </li>
               <li class="dropdown " id="dropdown-navbar-user" data-uid="<%= user._id %>" >
                   <a class="dropdown-toggle textuid" data-toggle="dropdown" href="#">
@@ -42,7 +40,7 @@
                   </a>
                   <ul class="dropdown-menu">
                       <li>
-                          <a href="/profile" data-toggle="modal">
+                          <a href="/profile/<%= user._id %>" data-toggle="modal">
                               <i class="fa fa-cog"></i>
                               &nbsp;Cài đặt tài khoản
                           </a>

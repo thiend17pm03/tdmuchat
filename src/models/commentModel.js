@@ -7,6 +7,7 @@ let commentSchema = new Schema({
   userId : mongoose.Types.ObjectId,
   content : String,
   voteAmout : {type:Number, default : 0},
+  isSpam : {type: Boolean, default: false},
   childComent : [
     {
       userId : mongoose.Types.ObjectId,
@@ -28,6 +29,36 @@ commentSchema.statics = {
     return this.aggregate([
       { "$match": { postId: mongoose.Types.ObjectId(id)} },
       { "$sort": { "createdAt": -1 } },
+      { "$lookup": {
+        "localField": "userId" ,
+        "from": "users",
+        "foreignField": "_id",
+        "as": "userinfo"
+      } },
+      { "$unwind": "$userinfo" },
+      
+      
+    ]).exec();
+  },
+  getCommentActiveByPostId(id){
+    return this.aggregate([
+      { "$match": { postId: mongoose.Types.ObjectId(id),isSpam : false} },
+      { "$sort": { "createdAt": -1 } },
+      { "$lookup": {
+        "localField": "userId" ,
+        "from": "users",
+        "foreignField": "_id",
+        "as": "userinfo"
+      } },
+      { "$unwind": "$userinfo" },
+      
+      
+    ]).exec();
+  },
+  getCommentVoteByPostId(id){
+    return this.aggregate([
+      { "$match": { postId: mongoose.Types.ObjectId(id)} },
+      { "$sort": { "voteAmout": -1 } },
       { "$lookup": {
         "localField": "userId" ,
         "from": "users",

@@ -7,7 +7,7 @@
       <div class="row no-margin admin-box-search">
         
         <div class="col-sm-7 no-padding">
-          <input type="text" class="form-control modal-title-row admin-search-text-input" id="" placeholder="Tìm kiếm bài đăng"  required>
+          <input type="text" class="form-control modal-title-row admin-search-text-input" id="text-input-search-post-admin" placeholder="Tìm kiếm bài đăng"  required>
         </div>
         <div class="col-sm-1 " style="line-height: 30px; padding-left: 5px;" ><i class="fa fa-search" style="font-size:24px;color: #8877ea; "></i></div>
       </div>
@@ -17,18 +17,8 @@
         <div class="col-sm-2"><span>Username</span></div>
       </div>
       <div class="row no-margin  admin-box-detail" >
-        <div class="col-sm-12 no-padding">
-          <% posts.forEach(function(post) { %>
-          <div class="row no-margin admin-row-detail" data-postid="<%= post._id %>">
-            <div class="col-sm-5 admin-row-text "><a href="/post/view/<%= post._id %>"> <%= post.title %></a></div>
-            <div class="col-sm-2 admin-row-day"><span><%= convertTimestampToDMY(post.createdAt) %> </span></div>
-            <div class="col-sm-2 no-padding admin-row-text-center"><span>thiencafe</span></div>
-            <div class="col-sm-2 ">
-              <button data-postid="<%= post._id %>" type="button" class="btn btn-custom admin-btn-delete-post btn-danger">Xóa</button>
-            </div>
-          </div>
-          <% }); %> 
-
+        <div class="col-sm-12 no-padding" id="data-admin-post">
+         <%- include('dataAdmin'); %> 
         </div>
       </div>
     
